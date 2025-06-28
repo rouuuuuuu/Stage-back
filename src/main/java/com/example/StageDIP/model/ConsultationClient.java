@@ -1,4 +1,3 @@
-// src/main/java/com/example/gestionfournisseurs/model/ConsultationClient.java
 package com.example.StageDIP.model;
 
 import jakarta.persistence.*;
@@ -30,18 +29,21 @@ public class ConsultationClient {
     @Column(nullable = false)
     private LocalDateTime dateCreation = LocalDateTime.now();
 
-    // Constructeurs, getters et setters
     public ConsultationClient() {}
 
-    // Getters et Setters
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public Long getClientId() { return clientId; }
     public void setClientId(Long clientId) { this.clientId = clientId; }
+
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
     public List<Produit> getProduitsDemandes() { return produitsDemandes; }
     public void setProduitsDemandes(List<Produit> produitsDemandes) { this.produitsDemandes = produitsDemandes; }
+
     public LocalDateTime getDateCreation() { return dateCreation; }
     public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
 }

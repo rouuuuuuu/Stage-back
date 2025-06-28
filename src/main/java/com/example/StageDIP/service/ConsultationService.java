@@ -1,34 +1,30 @@
 package com.example.StageDIP.service;
 
-import com.example.StageDIP.model.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
+import com.example.StageDIP.model.ConsultationClientDTO;
 import com.example.StageDIP.model.Produit;
-import com.example.StageDIP.repository.ConsultationRepository;
+import com.example.StageDIP.repository.ConsultationClientRepository;
 import com.example.StageDIP.repository.ProduitRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ConsultationService {
 
-    private final ConsultationRepository consultationRepository;
-    private final ProduitRepository produitRepository;
+    private final ConsultationClientRepository consultationRepo;
+    private final ProduitRepository produitRepo;
 
-    public ConsultationService(ConsultationRepository consultationRepository, 
-                             ProduitRepository produitRepository) {
-        this.consultationRepository = consultationRepository;
-        this.produitRepository = produitRepository;
+    public ConsultationService(ConsultationClientRepository consultationRepo, ProduitRepository produitRepo) {
+        this.consultationRepo = consultationRepo;
+        this.produitRepo = produitRepo;
     }
 
-    @Transactional
     public ConsultationClient createConsultation(ConsultationClientDTO dto) {
+        List<Produit> produits = produitRepo.findAllById(dto.getProduitsIds());
 
-    	List<Produit> produits = produitRepository.findAllById(dto.getProduitsIds());
         if (produits.size() != dto.getProduitsIds().size()) {
-            throw new IllegalArgumentException("Un ou plusieurs produits n'existent pas");
+            throw new IllegalArgumentException("Un ou plusieurs produits sont introuvables.");
         }
 
         ConsultationClient consultation = new ConsultationClient();
@@ -36,6 +32,6 @@ public class ConsultationService {
         consultation.setDescription(dto.getDescription());
         consultation.setProduitsDemandes(produits);
 
-        return consultationRepository.save(consultation);
+        return consultationRepo.save(consultation);
     }
 }

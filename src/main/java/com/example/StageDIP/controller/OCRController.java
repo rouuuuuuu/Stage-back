@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.StageDIP.model.OCRParser;
+import com.example.StageDIP.service.OCRParser;
 
 @RestController
 @RequestMapping("/api/ocr")
@@ -30,14 +30,14 @@ public class OCRController {
 
             String rawText = ocrParser.extractTextFromPdf(savedFile.getAbsolutePath());
 
-            System.out.println("🧠 Texte OCR extrait :\n" + rawText);
+            System.out.println("Texte OCR extrait :\n" + rawText);
 
             
 
             return ResponseEntity.ok("Texte extrait avec succès !");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("❌ Erreur pendant l'extraction OCR.");
+            return ResponseEntity.status(500).body(" Erreur pendant l'extraction OCR.");
         }
     }
 }

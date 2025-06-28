@@ -23,7 +23,7 @@ public class Produit {
 
     // Many products can belong to one supplier
     @ManyToOne
-    @JoinColumn(name = "fournisseur_id") // Foreign key column
+    @JoinColumn(name = "fournisseur_id") 
     private Fournisseur fournisseur;
 
     @ManyToOne
@@ -56,4 +56,9 @@ public class Produit {
 
     public Fournisseur getFournisseur() { return fournisseur; }
     public void setFournisseur(Fournisseur fournisseur) { this.fournisseur = fournisseur; }
-}
+    
+    public Facture getFacture() { return facture; }
+    public void setFacture(Facture facture) {
+        this.facture = facture;
+    }}
+	

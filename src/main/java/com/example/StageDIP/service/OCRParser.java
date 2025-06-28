@@ -1,4 +1,4 @@
-package com.example.StageDIP.model;
+package com.example.StageDIP.service;
 
 import net.sourceforge.tess4j.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import com.example.StageDIP.model.Fournisseur;
+import com.example.StageDIP.model.Facture;
+import com.example.StageDIP.model.Produit;
+
 
 import org.springframework.stereotype.Service;
 

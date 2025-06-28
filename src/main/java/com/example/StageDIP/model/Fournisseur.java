@@ -1,9 +1,13 @@
 package com.example.StageDIP.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -18,6 +22,12 @@ public class Fournisseur {
     private String adresse;
     private String email;
     private Double notation;
+
+    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    private List<Produit> produits;
+
+    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    private List<Facture> factures;
 
     // Default constructor for JPA
     public Fournisseur() {}
