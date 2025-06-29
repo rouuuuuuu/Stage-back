@@ -6,6 +6,10 @@ import com.example.StageDIP.service.FournisseurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+
 import java.util.List;
 
 @RestController
@@ -32,16 +36,21 @@ public class FournisseurController {
         service.delete(id);
     }
 
+   
     @GetMapping("/filter")
-    public ResponseEntity<List<Fournisseur>> filterFournisseurs(
-            @RequestParam(required = false) Double minPrix,
-            @RequestParam(required = false) Double maxPrix,
-            @RequestParam(required = false) Double minNotation,
-            @RequestParam(required = false) String categorie,
-            @RequestParam(required = false) String nomProduit,
-            @RequestParam(required = false) String devise) {
-
-        List<Fournisseur> fournisseurs = service.filterFournisseurs(minPrix, maxPrix, minNotation, categorie, nomProduit, devise);
+    public ResponseEntity<Page<Fournisseur>> filterFournisseurs(
+        @RequestParam(required = false) Double minPrix,
+        @RequestParam(required = false) Double maxPrix,
+        @RequestParam(required = false) Double minNotation,
+        @RequestParam(required = false) String categorie,
+        @RequestParam(required = false) String nomProduit,
+        @RequestParam(required = false) String devise,
+        @RequestParam(required = false) Integer maxDelai,
+        Pageable pageable
+    ) {
+        Page<Fournisseur> fournisseurs = service.filterFournisseurs(
+            minPrix, maxPrix, minNotation, categorie, nomProduit, devise, maxDelai, pageable
+        );
         return ResponseEntity.ok(fournisseurs);
     }
 }

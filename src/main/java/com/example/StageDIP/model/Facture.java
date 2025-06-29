@@ -1,13 +1,6 @@
 package com.example.StageDIP.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,23 +12,25 @@ public class Facture {
     private Long id;
 
     private LocalDate date;
+
     private Double montantTotal;
 
-    // Voilà ta devise, parce qu'on parle de monnaie ici, pas de rêves
+    // Devise utilisée dans la facture (EUR, USD, etc.)
     private String devise;
 
-    // Et ton délai de livraison, parce que faut pas faire attendre la princesse
+    // Délai max de livraison en jours
     private Integer delaiLivraison;
 
-    // Many invoices belong to one supplier
+    // Chaque facture appartient à un seul fournisseur
     @ManyToOne
-    @JoinColumn(name = "fournisseur_id")
+    @JoinColumn(name = "fournisseur_id", nullable = false)
     private Fournisseur fournisseur;
 
-    // One invoice can contain many products
+    // Une facture peut contenir plusieurs produits
     @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL)
     private List<Produit> produits;
 
+    // === Constructors ===
     public Facture() {}
 
     public Facture(LocalDate date, Double montantTotal, String devise, Integer delaiLivraison,
@@ -48,8 +43,7 @@ public class Facture {
         this.produits = produits;
     }
 
-    // Getters & Setters
-
+    // === Getters & Setters ===
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

@@ -3,6 +3,7 @@ package com.example.StageDIP.repository;
 import com.example.StageDIP.model.Fournisseur;
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.model.Facture;
+
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
@@ -47,9 +48,16 @@ public class FournisseurSpecifications {
     public static Specification<Fournisseur> deviseFactureEgale(String devise) {
         return (root, query, builder) -> {
             if (devise == null || devise.isEmpty()) return null;
-
             Join<Fournisseur, Facture> factures = root.join("factures", JoinType.INNER);
             return builder.equal(factures.get("devise"), devise);
+        };
+    }
+
+    public static Specification<Fournisseur> delaiLivraisonMax(Integer maxDelai) {
+        return (root, query, builder) -> {
+            if (maxDelai == null) return null;
+            Join<Fournisseur, Facture> factures = root.join("factures", JoinType.INNER);
+            return builder.le(factures.get("delaiLivraison"), maxDelai);
         };
     }
 }
