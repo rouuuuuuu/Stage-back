@@ -1,5 +1,6 @@
 package com.example.StageDIP.repository;
 
+import com.example.StageDIP.model.Fournisseur;
 import com.example.StageDIP.model.Produit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,6 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     @Query("SELECT p FROM Produit p WHERE LOWER(p.nom) LIKE LOWER(CONCAT('%', :query, '%'))")
     List<Produit> searchByNomPartiel(@Param("query") String query);
+    List<Produit> findByFournisseur(Fournisseur fournisseur);
+
 }

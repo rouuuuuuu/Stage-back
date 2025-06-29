@@ -15,8 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.StageDIP.controller.ConsultationController;
+import com.example.StageDIP.dto.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
-import com.example.StageDIP.model.ConsultationClientDTO;
 import com.example.StageDIP.service.ConsultationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

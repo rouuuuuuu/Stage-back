@@ -1,7 +1,7 @@
 package com.example.StageDIP.service;
 
+import com.example.StageDIP.dto.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
-import com.example.StageDIP.model.ConsultationClientDTO;
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.repository.ConsultationClientRepository;
 import com.example.StageDIP.repository.ProduitRepository;

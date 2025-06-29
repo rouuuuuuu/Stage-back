@@ -1,4 +1,4 @@
-package com.example.StageDIP.model;
+package com.example.StageDIP.dto;
 
 import java.util.List;
 

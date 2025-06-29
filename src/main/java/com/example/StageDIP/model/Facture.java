@@ -11,8 +11,6 @@ import jakarta.persistence.JoinColumn;
 import java.time.LocalDate;
 import java.util.List;
 
-
-
 @Entity
 public class Facture {
 
@@ -22,6 +20,12 @@ public class Facture {
 
     private LocalDate date;
     private Double montantTotal;
+
+    // Voilà ta devise, parce qu'on parle de monnaie ici, pas de rêves
+    private String devise;
+
+    // Et ton délai de livraison, parce que faut pas faire attendre la princesse
+    private Integer delaiLivraison;
 
     // Many invoices belong to one supplier
     @ManyToOne
@@ -34,9 +38,12 @@ public class Facture {
 
     public Facture() {}
 
-    public Facture(LocalDate date, Double montantTotal, Fournisseur fournisseur, List<Produit> produits) {
+    public Facture(LocalDate date, Double montantTotal, String devise, Integer delaiLivraison,
+                   Fournisseur fournisseur, List<Produit> produits) {
         this.date = date;
         this.montantTotal = montantTotal;
+        this.devise = devise;
+        this.delaiLivraison = delaiLivraison;
         this.fournisseur = fournisseur;
         this.produits = produits;
     }
@@ -51,6 +58,12 @@ public class Facture {
 
     public Double getMontantTotal() { return montantTotal; }
     public void setMontantTotal(Double montantTotal) { this.montantTotal = montantTotal; }
+
+    public String getDevise() { return devise; }
+    public void setDevise(String devise) { this.devise = devise; }
+
+    public Integer getDelaiLivraison() { return delaiLivraison; }
+    public void setDelaiLivraison(Integer delaiLivraison) { this.delaiLivraison = delaiLivraison; }
 
     public Fournisseur getFournisseur() { return fournisseur; }
     public void setFournisseur(Fournisseur fournisseur) { this.fournisseur = fournisseur; }

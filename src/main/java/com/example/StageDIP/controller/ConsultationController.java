@@ -1,8 +1,9 @@
 package com.example.StageDIP.controller;
 
-import com.example.StageDIP.model.ConsultationClientDTO;
+import com.example.StageDIP.dto.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.service.ConsultationService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
