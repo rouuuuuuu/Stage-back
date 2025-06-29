@@ -2,6 +2,9 @@ package com.example.StageDIP.controller;
 
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.service.ProduitService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +13,35 @@ import java.util.List;
 @RequestMapping("/api/produits")
 public class ProduitController {
 
-    private final ProduitService service;
+    private final ProduitService produitService;
 
-    public ProduitController(ProduitService service) {
-        this.service = service;
+    public ProduitController(ProduitService produitService) {
+        this.produitService = produitService;
     }
 
     @GetMapping
     public List<Produit> getAll() {
-        return service.getAll();
+        return produitService.getAll();
     }
 
     @PostMapping
     public Produit add(@RequestBody Produit produit) {
-        return service.save(produit);
+        return produitService.save(produit);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        service.delete(id);
+        produitService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<Produit> searchProduits(@RequestParam String query) {
+        return produitService.searchProduits(query);
+    }
+
+    @PostMapping("/nouveau")
+    public ResponseEntity<Produit> addNewProduit(@RequestBody Produit produit) {
+    	Produit savedProduit = produitService.addNewProduct(produit);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduit);
     }
 }

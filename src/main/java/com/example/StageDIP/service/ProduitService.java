@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class ProduitService {
+
     private final ProduitRepository repo;
 
     public ProduitService(ProduitRepository repo) {
@@ -25,4 +26,16 @@ public class ProduitService {
     public void delete(Long id) {
         repo.deleteById(id);
     }
+
+    public List<Produit> searchProduits(String query) {
+        return repo.searchByNomPartiel(query)
+                   .stream()
+                   .limit(10)
+                   .toList();
+    }
+    public Produit addNewProduct(Produit produit) {
+        return repo.save(produit);
+    }
+
+
 }

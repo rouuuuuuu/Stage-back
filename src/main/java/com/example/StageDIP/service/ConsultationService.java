@@ -6,6 +6,7 @@ import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.repository.ConsultationClientRepository;
 import com.example.StageDIP.repository.ProduitRepository;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -21,16 +22,16 @@ public class ConsultationService {
     }
 
     public ConsultationClient createConsultation(ConsultationClientDTO dto) {
-        List<Produit> produits = produitRepo.findAllById(dto.getProduitsIds());
-
-        if (produits.size() != dto.getProduitsIds().size()) {
-            throw new IllegalArgumentException("Un ou plusieurs produits sont introuvables.");
-        }
+        List<Produit> produits = dto.getProduitsIds().stream()
+            .map(id -> produitRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produit introuvable avec id : " + id)))
+            .toList();
 
         ConsultationClient consultation = new ConsultationClient();
         consultation.setClientId(dto.getClientId());
         consultation.setDescription(dto.getDescription());
         consultation.setProduitsDemandes(produits);
+        consultation.setDateCreation(LocalDateTime.now());
 
         return consultationRepo.save(consultation);
     }
