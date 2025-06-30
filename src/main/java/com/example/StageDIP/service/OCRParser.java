@@ -1,6 +1,8 @@
 package com.example.StageDIP.service;
 
 import net.sourceforge.tess4j.*;
+
+import org.antlr.v4.runtime.misc.Array2DHashSet;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
@@ -10,6 +12,8 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import com.example.StageDIP.model.Fournisseur;
@@ -57,7 +61,7 @@ public class OCRParser {
     public Facture parseFactureFromText(String rawText) {
         Facture facture = new Facture();
         Fournisseur f = new Fournisseur();
-        List<Produit> produits = new ArrayList<>();
+        Set<Produit> produits = new Array2DHashSet<>();
 
         String[] lines = rawText.split("\\r?\\n");
 

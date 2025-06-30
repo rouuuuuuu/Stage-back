@@ -71,6 +71,10 @@ public class Fournisseur {
     public void setFactures(Set<Facture> factures) {
         this.factures = factures;
     }
+    public void setProduits(Set<Produit> produits) {
+        this.produits = produits;
+    }
+    
     
 
 }
