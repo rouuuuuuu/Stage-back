@@ -22,8 +22,9 @@ public class FournisseurController {
     }
 
     @GetMapping
-    public List<Fournisseur> getAll() {
-        return service.getAll();
+    public ResponseEntity<Page<Fournisseur>> getAll(Pageable pageable) {
+        Page<Fournisseur> fournisseurs = service.getAll(pageable);
+        return ResponseEntity.ok(fournisseurs);
     }
 
     @PostMapping
@@ -36,7 +37,15 @@ public class FournisseurController {
         service.delete(id);
     }
 
-   
+    @PutMapping("/{id}")
+    public ResponseEntity<Fournisseur> updateFournisseur(@PathVariable Long id, @RequestBody Fournisseur fournisseur) {
+        Fournisseur updated = service.update(id, fournisseur);
+        if (updated == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updated);
+    }
+
     @GetMapping("/filter")
     public ResponseEntity<Page<Fournisseur>> filterFournisseurs(
         @RequestParam(required = false) Double minPrix,

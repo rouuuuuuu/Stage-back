@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,9 @@ public class FournisseurService {
         this.repo = repo;
     }
 
-    public List<Fournisseur> getAll() {
-        return repo.findAll();
+    public Page<Fournisseur> getAll(Pageable pageable) {
+        return repo.findAll(pageable);
     }
-
     public Fournisseur save(Fournisseur f) {
         return repo.save(f);
     }
@@ -56,6 +56,8 @@ public class FournisseurService {
             double toRate = ratesCache.getOrDefault(toCurrency.toUpperCase(), 1.0);
             return amount / fromRate * toRate;
         }
+       
+
 
         private void fetchRates() {
             String url = baseUrl + apiKey;
@@ -82,5 +84,18 @@ public class FournisseurService {
 
     	    return repo.findAll(spec, pageable);
     	}
+    public Fournisseur update(Long id, Fournisseur fournisseurData) {
+        Optional<Fournisseur> optional = repo.findById(id);
+        if (optional.isEmpty()) return null;
+
+        Fournisseur existing = optional.get();
+        // Update fields explicitly, no blind save:
+        existing.setNom(fournisseurData.getNom());
+        existing.setAdresse(fournisseurData.getAdresse());
+        existing.setEmail(fournisseurData.getEmail());
+        existing.setNotation(fournisseurData.getNotation());
+
+        return repo.save(existing);
+    }
 
 }

@@ -2,6 +2,9 @@ package com.example.StageDIP.service;
 
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.repository.ProduitRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +14,13 @@ public class ProduitService {
 
     private final ProduitRepository repo;
 
-    public ProduitService(ProduitRepository repo) {
-        this.repo = repo;
+    public ProduitService(ProduitRepository produitRepository) {
+        this.repo = produitRepository;
     }
 
+    public Page<Produit> getAllProduits(Pageable pageable) {
+        return repo.findAll(pageable);
+    }
     public List<Produit> getAll() {
         return repo.findAll();
     }

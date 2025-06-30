@@ -3,6 +3,8 @@ package com.example.StageDIP.controller;
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.service.ProduitService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,11 @@ public class ProduitController {
     }
 
     @GetMapping
-    public List<Produit> getAll() {
-        return produitService.getAll();
-    }
+    public ResponseEntity<Page<Produit>> getAllProduits(Pageable pageable) {
+        Page<Produit> page = produitService.getAllProduits(pageable);
+        return ResponseEntity.ok(page);
+    
+}
 
     @PostMapping
     public Produit add(@RequestBody Produit produit) {
