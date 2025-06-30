@@ -3,6 +3,15 @@ package com.example.StageDIP.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+@Table(name = "facture",
+indexes = {
+    @Index(name = "idx_devise", columnList = "devise"),
+    @Index(name = "idx_delai_livraison", columnList = "delaiLivraison")
+}
+)
+
 
 @Entity
 public class Facture {
@@ -28,13 +37,13 @@ public class Facture {
 
     // Une facture peut contenir plusieurs produits
     @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL)
-    private List<Produit> produits;
+    private Set<Produit> produits;
 
     // === Constructors ===
     public Facture() {}
 
     public Facture(LocalDate date, Double montantTotal, String devise, Integer delaiLivraison,
-                   Fournisseur fournisseur, List<Produit> produits) {
+                   Fournisseur fournisseur, Set<Produit> produits) {
         this.date = date;
         this.montantTotal = montantTotal;
         this.devise = devise;
@@ -62,6 +71,6 @@ public class Facture {
     public Fournisseur getFournisseur() { return fournisseur; }
     public void setFournisseur(Fournisseur fournisseur) { this.fournisseur = fournisseur; }
 
-    public List<Produit> getProduits() { return produits; }
-    public void setProduits(List<Produit> produits) { this.produits = produits; }
+    public Set<Produit> getProduits() { return produits; }
+    public void setProduits(Set<Produit> produits) { this.produits = produits; }
 }

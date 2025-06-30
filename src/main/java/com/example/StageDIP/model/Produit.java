@@ -10,6 +10,15 @@ import jakarta.persistence.JoinColumn;
 /**
  * Entity representing a Product (Produit)
  */
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+
+@Table(name = "produit",
+    indexes = {
+        @Index(name = "idx_prix_unitaire", columnList = "prixUnitaire"),
+        @Index(name = "idx_categorie", columnList = "categorie")
+    }
+)
 @Entity
 public class Produit {
 
@@ -60,5 +69,8 @@ public class Produit {
     public Facture getFacture() { return facture; }
     public void setFacture(Facture facture) {
         this.facture = facture;
-    }}
+        
+    }
+  
+}
 	

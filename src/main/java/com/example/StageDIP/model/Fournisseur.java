@@ -1,6 +1,7 @@
 package com.example.StageDIP.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -8,6 +9,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+
+@Table(name = "fournisseur",
+indexes = {
+    @Index(name = "idx_notation", columnList = "notation")
+}
+)
 
 
 @Entity
@@ -24,10 +33,10 @@ public class Fournisseur {
     private Double notation;
 
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
-    private List<Produit> produits;
+    private Set<Produit> produits;
 
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
-    private List<Facture> factures;
+    private Set<Facture> factures;
 
     // Default constructor for JPA
     public Fournisseur() {}
@@ -55,4 +64,13 @@ public class Fournisseur {
 
     public Double getNotation() { return notation; }
     public void setNotation(Double notation) { this.notation = notation; }
+    public Set<Facture> getFactures() {
+        return factures;
+    }
+
+    public void setFactures(Set<Facture> factures) {
+        this.factures = factures;
+    }
+    
+
 }
