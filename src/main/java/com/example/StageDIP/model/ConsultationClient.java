@@ -12,8 +12,9 @@ public class ConsultationClient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long clientId;
+    @ManyToOne(fetch = FetchType.EAGER) // EAGER to auto-fetch client details
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -35,8 +36,8 @@ public class ConsultationClient {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Long getClientId() { return clientId; }
-    public void setClientId(Long clientId) { this.clientId = clientId; }
+    public Client getClient() { return client; }
+    public void setClient(Client client) { this.client = client; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
