@@ -4,6 +4,8 @@ import com.example.StageDIP.dto.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.service.ConsultationService;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,19 @@ public class ConsultationController {
         }
     }
 
-    // Add this GET mapping right here — no excuses
+    // GET all consultations (admin) OR by clientId (client)
     @GetMapping
-    public ResponseEntity<?> getAllConsultations() {
+    public ResponseEntity<?> getConsultations(@RequestParam(required = false) Long clientId) {
         try {
-            var consultations = consultationService.getAllConsultations();
+            List<ConsultationClient> consultations;
+            if (clientId != null) {
+                consultations = consultationService.getConsultationsByClientId(clientId);
+            } else {
+                consultations = consultationService.getAllConsultations();
+            }
             return ResponseEntity.ok(consultations);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erreur serveur : impossible de récupérer les consultations");
         }
     }
-
 }

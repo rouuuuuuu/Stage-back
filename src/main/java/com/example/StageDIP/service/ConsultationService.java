@@ -18,36 +18,41 @@ public class ConsultationService {
 
     private final ConsultationClientRepository consultationRepo;
     private final ProduitRepository produitRepo;
-	private ClientRepository clientRepo;
+    private final ClientRepository clientRepo;
 
     public ConsultationService(
-    	    ConsultationClientRepository consultationRepo, 
-    	    ProduitRepository produitRepo,
-    	    ClientRepository clientRepo
-    	) {
-    	    this.consultationRepo = consultationRepo;
-    	    this.produitRepo = produitRepo;
-    	    this.clientRepo = clientRepo;
-    	}
+        ConsultationClientRepository consultationRepo,
+        ProduitRepository produitRepo,
+        ClientRepository clientRepo
+    ) {
+        this.consultationRepo = consultationRepo;
+        this.produitRepo = produitRepo;
+        this.clientRepo = clientRepo;
+    }
 
-
+    // Récupérer toutes les consultations (Admin)
     public List<ConsultationClient> getAllConsultations() {
         return consultationRepo.findAll();
     }
 
+    // Récupérer consultations par client
+    public List<ConsultationClient> getConsultationsByClientId(Long clientId) {
+        return consultationRepo.findByClientId(clientId);
+    }
 
+    // Création consultation avec association client + produits
     public ConsultationClient createConsultation(ConsultationClientDTO dto) {
-        // Récupérer les produits
+        // Récupérer le client
+        Client client = clientRepo.findById(dto.getClientId())
+            .orElseThrow(() -> new IllegalArgumentException("Client introuvable avec id : " + dto.getClientId()));
+
+        // Récupérer les produits demandés
         List<Produit> produits = dto.getProduitsIds().stream()
             .map(id -> produitRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produit introuvable avec id : " + id)))
             .toList();
 
-        // Récupérer le client
-        Client client = clientRepo.findById(dto.getClientId())
-            .orElseThrow(() -> new IllegalArgumentException("Client introuvable avec id : " + dto.getClientId()));
-
-        // Créer la consultation ET set client dedans
+        // Création de la consultation
         ConsultationClient consultation = new ConsultationClient();
         consultation.setClient(client);
         consultation.setDescription(dto.getDescription());
