@@ -22,6 +22,11 @@ public class ConsultationService {
         this.produitRepo = produitRepo;
     }
 
+    public List<ConsultationClient> getAllConsultations() {
+        return consultationRepo.findAll();
+    }
+
+
     public ConsultationClient createConsultation(ConsultationClientDTO dto) {
         List<Produit> produits = dto.getProduitsIds().stream()
             .map(id -> produitRepo.findById(id)

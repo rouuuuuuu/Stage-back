@@ -26,4 +26,16 @@ public class ConsultationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // Add this GET mapping right here — no excuses
+    @GetMapping
+    public ResponseEntity<?> getAllConsultations() {
+        try {
+            var consultations = consultationService.getAllConsultations();
+            return ResponseEntity.ok(consultations);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur serveur : impossible de récupérer les consultations");
+        }
+    }
+
 }
