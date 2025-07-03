@@ -2,6 +2,7 @@ package com.example.StageDIP.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,17 +15,24 @@ public class ConsultationClient {
 
     @ManyToOne(fetch = FetchType.EAGER) // EAGER to auto-fetch client details
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    private Client client;  //badalhaa employee
+   
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "facture_id")
+    private Facture facture;
+
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
-
+    
+    private Date delai ;
     @ManyToMany
     @JoinTable(
         name = "consultation_produits",
         joinColumns = @JoinColumn(name = "consultation_id"),
         inverseJoinColumns = @JoinColumn(name = "produit_id")
     )
+    
     private List<Produit> produitsDemandes;
 
     @Column(nullable = false)
@@ -41,10 +49,19 @@ public class ConsultationClient {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-
+    
+    public Date getDelai() { return delai; }
+    public void setDelai(Date delai) { this.delai = delai; }
+    
     public List<Produit> getProduitsDemandes() { return produitsDemandes; }
     public void setProduitsDemandes(List<Produit> produitsDemandes) { this.produitsDemandes = produitsDemandes; }
 
     public LocalDateTime getDateCreation() { return dateCreation; }
     public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+    public Facture getFacture() { return facture; }
+
+    public void setFacture(Facture facture) {
+        this.facture = facture;
+    }
+
 }

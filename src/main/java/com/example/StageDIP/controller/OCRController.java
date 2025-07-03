@@ -34,7 +34,7 @@ public class OCRController {
 
             
 
-            return ResponseEntity.ok("Texte extrait avec succès !");
+            return ResponseEntity.ok(rawText);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(" Erreur pendant l'extraction OCR.");

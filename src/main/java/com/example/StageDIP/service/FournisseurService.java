@@ -79,7 +79,6 @@ public class FournisseurService {
     	    spec = spec.and(FournisseurSpecifications.notationMin(minNotation));
     	    spec = spec.and(FournisseurSpecifications.categorieProduitEgale(categorie));
     	    spec = spec.and(FournisseurSpecifications.nomProduitContient(nomProduit));
-    	    spec = spec.and(FournisseurSpecifications.deviseFactureEgale(devise));
     	    spec = spec.and(FournisseurSpecifications.delaiLivraisonMax(maxDelai));
 
     	    return repo.findAll(spec, pageable);

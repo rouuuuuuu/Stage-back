@@ -1,10 +1,12 @@
 package com.example.StageDIP.service;
 
 import com.example.StageDIP.dto.ConsultationClientDTO;
+import com.example.StageDIP.model.Client;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.repository.ConsultationClientRepository;
 import com.example.StageDIP.repository.ProduitRepository;
+import com.example.StageDIP.repository.ClientRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,10 @@ class ConsultationServiceTest {
 
     @Mock
     private ProduitRepository produitRepo;
+    
+    @Mock
+    private ClientRepository clientRepo;   // <----- ADD THIS MOCK
+
 
     @InjectMocks
     private ConsultationService consultationService;
@@ -36,13 +42,13 @@ class ConsultationServiceTest {
 
     @Test
     void createConsultation_ValidClientAndProducts_Success() {
-        // Given: a DTO with valid product IDs
+        // Prepare DTO with clientId (Long), not Client object
         ConsultationClientDTO dto = new ConsultationClientDTO();
         dto.setClientId(1L);
         dto.setDescription("Test demande");
         dto.setProduitsIds(List.of(1L, 2L));
 
-        // Mock repo responses
+        // Mock produit repo
         Produit produit1 = new Produit();
         produit1.setId(1L);
         Produit produit2 = new Produit();
@@ -50,15 +56,19 @@ class ConsultationServiceTest {
 
         when(produitRepo.findById(1L)).thenReturn(Optional.of(produit1));
         when(produitRepo.findById(2L)).thenReturn(Optional.of(produit2));
-        when(consultationRepo.save(any(ConsultationClient.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+        when(consultationRepo.save(any(ConsultationClient.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // When
+        // Mock client repo inside your service! (You need to mock clientRepo too)
+        Client client = new Client();
+        client.setId(1L);
+        // You need a ClientRepository mock here, add @Mock private ClientRepository clientRepo;
+        when(clientRepo.findById(1L)).thenReturn(Optional.of(client));
+
+        // Call service
         ConsultationClient result = consultationService.createConsultation(dto);
 
-        // Then
         assertNotNull(result);
-        assertEquals(dto.getClientId(), result.getClientId());
+        assertEquals(client, result.getClient());
         assertEquals(dto.getDescription(), result.getDescription());
         assertEquals(2, result.getProduitsDemandes().size());
         verify(consultationRepo, times(1)).save(any(ConsultationClient.class));
@@ -66,16 +76,18 @@ class ConsultationServiceTest {
 
     @Test
     void createConsultation_ProductNotFound_ThrowsException() {
-        // Given: a DTO with a missing product ID
         ConsultationClientDTO dto = new ConsultationClientDTO();
         dto.setClientId(1L);
         dto.setDescription("Test produit manquant");
         dto.setProduitsIds(List.of(999L));
 
-        // Mock product lookup failure
         when(produitRepo.findById(999L)).thenReturn(Optional.empty());
 
-        // Then: assert that exception is thrown
+        // Mock clientRepo too if service uses it
+        Client client = new Client();
+        client.setId(1L);
+        when(clientRepo.findById(1L)).thenReturn(Optional.of(client));
+
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             consultationService.createConsultation(dto);
         });

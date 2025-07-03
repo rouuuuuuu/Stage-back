@@ -31,6 +31,8 @@ public class Fournisseur {
     private String adresse;
     private String email;
     private Double notation;
+    private Double num;
+    private Double fax;
 
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
     private Set<Produit> produits;
@@ -41,10 +43,12 @@ public class Fournisseur {
     // Default constructor for JPA
     public Fournisseur() {}
 
-    public Fournisseur(String nom, String adresse, String email, Double notation) {
+    public Fournisseur(String nom, String adresse, String email, Double notation,Double num,Double fax) {
         this.nom = nom;
         this.adresse = adresse;
         this.email = email;
+        this.num = num;
+        this.fax = fax;
         this.notation = notation;
     }
 
@@ -61,6 +65,11 @@ public class Fournisseur {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    public Double getNumero() { return num; }
+    public void setNumero(Double num) { this.num = num; }
+    
+    public Double getFax() { return fax; }
+    public void setFax(double fax) { this.fax = fax; }
 
     public Double getNotation() { return notation; }
     public void setNotation(Double notation) { this.notation = notation; }

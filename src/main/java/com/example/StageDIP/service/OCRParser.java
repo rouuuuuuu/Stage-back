@@ -11,8 +11,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -26,104 +31,126 @@ import org.springframework.stereotype.Service;
 @Service
 public class OCRParser {
 
-    public String extractTextFromPdf(String filePath) {
-        StringBuilder fullText = new StringBuilder();
-        try {
+	public String extractTextFromPdf(String filePath) {
+	    StringBuilder fullText = new StringBuilder();
+	    try {
+	        File file = new File(filePath);  // Use the passed file path, duh
+	        PDDocument document = PDDocument.load(file);
+	        Tesseract tesseract = new Tesseract();
+	        tesseract.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata"); // Make sure this path is correct on your machine or server
+	        tesseract.setLanguage("fra"); // Or "eng"
 
-        	File file = new File("uploads/your_file.pdf");
-        	PDDocument document = PDDocument.load(file); // <- STATIC method call
+	        PDFRenderer pdfRenderer = new PDFRenderer(document);
 
+	        for (int i = 0; i < document.getNumberOfPages(); i++) {
+	            File tempImg = new File("uploads/temp_page_" + i + ".png");
+	            BufferedImage image = pdfRenderer.renderImageWithDPI(i, 300); // Render page i, not 0
 
-            Tesseract tesseract = new Tesseract();
-            tesseract.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
-            tesseract.setLanguage("fra"); // Ou "eng"
+	            ImageIO.write(image, "png", tempImg);
 
-            for (int i = 0; i < document.getNumberOfPages(); i++) {
-            	PDFRenderer pdfRenderer = new PDFRenderer(document);
-                File tempImg = new File("uploads/temp_page_" + i + ".png");
-                BufferedImage image = pdfRenderer.renderImageWithDPI(0, 300); // Render page 0
+	            String result = tesseract.doOCR(tempImg);
+	            fullText.append(result).append("\n");
 
-                ImageIO.write(image, "png", tempImg);
+	            tempImg.delete(); // Clean up temp image to avoid disk clutter
+	        }
+	        document.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return fullText.toString();
+	}
 
-                String result = tesseract.doOCR(tempImg);
-                fullText.append(result).append("\n");
-            }
+	public Facture parseFactureFromText(String rawText) {
+	    Facture facture = new Facture();
+	    Fournisseur f = new Fournisseur();
+	    Set<Produit> produits = new HashSet<>();
 
-            document.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	    // Prepare date parser (adjust pattern if needed)
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        return fullText.toString();
-    }
+	    String[] lines = rawText.split("\\r?\\n");
 
-    // BONUS: Extraction des objets Java
-    public Facture parseFactureFromText(String rawText) {
-        Facture facture = new Facture();
-        Fournisseur f = new Fournisseur();
-        Set<Produit> produits = new Array2DHashSet<>();
+	    for (String line : lines) {
+	        line = line.toLowerCase();
 
-        String[] lines = rawText.split("\\r?\\n");
+	        if (line.contains("nom fournisseur")) {
+	            f.setNom(getValueAfterColon(line));
+	        }
 
-        for (String line : lines) {
-            line = line.toLowerCase();
-            if (line.contains("nom fournisseur")) {
-                f.setNom(getValueAfterColon(line));
-            }
-            if (line.contains("adresse")) {
-                f.setAdresse(getValueAfterColon(line));
-            }
-            if (line.contains("email")) {
-                f.setEmail(getValueAfterColon(line));
-            }
-            if (line.contains("notation")) {
-                try {
-                    f.setNotation(Double.parseDouble(getValueAfterColon(line)));
-                } catch (Exception e) { /* ignore */ }
-            }
+	        if (line.contains("adresse")) {
+	            f.setAdresse(getValueAfterColon(line));
+	        }
 
-            if (line.contains("produit") || line.contains("prix")) {
-                Produit p = new Produit();
-                if (line.contains("produit")) p.setNom(getValueAfterKeyword(line, "produit"));
-                if (line.contains("catégorie")) p.setCategorie(getValueAfterKeyword(line, "catégorie"));
-                if (line.contains("prix")) {
-                    try {
-                        p.setPrixUnitaire(Double.parseDouble(getValueAfterKeyword(line, "prix")));
-                    } catch (Exception e) { /* ignore */ }
-                }
-                p.setFournisseur(f);
-                produits.add(p);
-            }
+	        if (line.contains("email")) {
+	            f.setEmail(getValueAfterColon(line));
+	        }
 
-            if (line.contains("date")) {
-                try {
-                    facture.setDate(LocalDate.parse(getValueAfterColon(line).trim())); // Assume format is correct
-                } catch (Exception e) { /* handle parsing if needed */ }
-            }
+	        if (line.contains("notation")) {
+	            try {
+	                f.setNotation(Double.parseDouble(getValueAfterColon(line)));
+	            } catch (Exception e) {
+	                // Ignore bad notation
+	            }
+	        }
 
-            if (line.contains("montant")) {
-                try {
-                    facture.setMontantTotal(Double.parseDouble(getValueAfterColon(line)));
-                } catch (Exception e) { /* ignore */ }
-            }
-        }
+	        if (line.contains("produit") || line.contains("prix")) {
+	            Produit p = new Produit();
 
-        facture.setFournisseur(f);
-        facture.setProduits(produits);
-        return facture;
-    }
+	            if (line.contains("produit")) {
+	                p.setNom(getValueAfterKeyword(line, "produit"));
+	            }
 
-    private String getValueAfterColon(String line) {
-        return line.contains(":") ? line.split(":", 2)[1].trim() : "";
-    }
+	            if (line.contains("catégorie")) {
+	                p.setCategorie(getValueAfterKeyword(line, "catégorie"));
+	            }
 
-    private String getValueAfterKeyword(String line, String keyword) {
-        String[] parts = line.split(",");
-        for (String part : parts) {
-            if (part.contains(keyword)) {
-                return part.split(":", 2)[1].trim();
-            }
-        }
-        return "";
-    }
-}
+	            if (line.contains("prix")) {
+	                try {
+	                    p.setPrixUnitaire(Double.parseDouble(getValueAfterKeyword(line, "prix")));
+	                } catch (Exception e) {
+	                    // Ignore bad price
+	                }
+	            }
+
+	            p.setFournisseur(f); // Link produit to its fournisseur
+	            produits.add(p);
+	        }
+
+	        if (line.contains("date")) {
+	            try {
+	                String dateStr = getValueAfterColon(line).trim();
+	                Date parsedDate = sdf.parse(dateStr); // Ex: 23/06/2024
+	                facture.setDate(parsedDate);
+	            } catch (Exception e) {
+	                // Log or handle bad date
+	            }
+	        }
+
+	        if (line.contains("montant")) {
+	            try {
+	                facture.setMontantTotal(Double.parseDouble(getValueAfterColon(line)));
+	            } catch (Exception e) {
+	                // Ignore bad amount
+	            }
+	        }
+	    }
+
+	    facture.setFournisseur(f);
+	    facture.setProduits(produits);
+	    return facture;
+	}
+
+	// 🔸 Helper methods
+	private String getValueAfterColon(String line) {
+	    return line.contains(":") ? line.split(":", 2)[1].trim() : "";
+	}
+
+	private String getValueAfterKeyword(String line, String keyword) {
+	    String[] parts = line.split(",");
+	    for (String part : parts) {
+	        if (part.contains(keyword)) {
+	            return part.split(":", 2)[1].trim();
+	        }
+	    }
+	    return "";
+	}}

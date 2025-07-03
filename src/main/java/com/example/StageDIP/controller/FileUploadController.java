@@ -15,7 +15,7 @@ public class FileUploadController {
 
     private final FileService fileService;
 
-    private static final long MAX_FILE_SIZE = 40 * 1024 * 1024; // 5 MB limit
+    private static final long MAX_FILE_SIZE = 40 * 1024 * 1024; 
     private static final String[] ALLOWED_TYPES = {
             "application/pdf",
             "application/vnd.ms-excel",

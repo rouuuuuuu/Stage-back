@@ -29,7 +29,6 @@ public class ConsultationController {
         }
     }
 
-    // GET all consultations (admin) OR by clientId (client)
     @GetMapping
     public ResponseEntity<?> getConsultations(@RequestParam(required = false) Long clientId) {
         try {

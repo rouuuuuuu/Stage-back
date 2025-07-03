@@ -2,8 +2,12 @@ package com.example.StageDIP.dto;
 
 import java.util.List;
 
+import com.example.StageDIP.model.Client;
+
 public class ConsultationClientDTO {
-    private Long clientId;
+	private Long clientId; 
+
+	
     private String description;
     private List<Long> produitsIds;
 
@@ -15,4 +19,14 @@ public class ConsultationClientDTO {
 
     public List<Long> getProduitsIds() { return produitsIds; }
     public void setProduitsIds(List<Long> produitsIds) { this.produitsIds = produitsIds; }
+
+private Long fournisseurId;
+
+public Long getFournisseurId() {
+    return fournisseurId;
+}
+
+public void setFournisseurId(Long fournisseurId) {
+    this.fournisseurId = fournisseurId;
+}
 }

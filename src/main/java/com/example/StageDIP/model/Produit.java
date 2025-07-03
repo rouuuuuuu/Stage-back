@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
         @Index(name = "idx_prix_unitaire", columnList = "prixUnitaire"),
         @Index(name = "idx_categorie", columnList = "categorie")
     }
+
 )
 @Entity
 public class Produit {
@@ -42,11 +43,12 @@ public class Produit {
 
     public Produit() {}
 
-    public Produit(String nom, String categorie, Double prixUnitaire, Fournisseur fournisseur) {
+    public Produit(String nom, String categorie, Double prixUnitaire, Fournisseur fournisseur,Facture facture) {
         this.nom = nom;
         this.categorie = categorie;
         this.prixUnitaire = prixUnitaire;
         this.fournisseur = fournisseur;
+        this.facture = facture;
     }
 
     // Getters & Setters

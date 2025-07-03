@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/matching")
@@ -34,8 +35,16 @@ public class MatchingController {
         Optional<ConsultationClient> consultationOpt = consultationRepository.findById(idConsultation);
         if (consultationOpt.isEmpty()) return ResponseEntity.notFound().build();
 
+        ConsultationClient consultation = consultationOpt.get();
+
+        // Extract product IDs from consultation
+        List<Long> produitIds = consultation.getProduitsDemandes()
+                                           .stream()
+                                           .map(p -> p.getId())
+                                           .collect(Collectors.toList());
+
         MatchWeightsDTO weights = new MatchWeightsDTO(poidsPrix, poidsDelai, poidsNotation);
-        List<FournisseurMatchDTO> matches = matchingService.matchFournisseurs(consultationOpt.get(), weights);
+        List<FournisseurMatchDTO> matches = matchingService.matchFournisseurs(produitIds, weights);
 
         return ResponseEntity.ok(matches);
     }
