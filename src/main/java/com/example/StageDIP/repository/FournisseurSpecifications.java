@@ -3,58 +3,64 @@ package com.example.StageDIP.repository;
 import com.example.StageDIP.model.Fournisseur;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.jpa.domain.Specification;
 
 public class FournisseurSpecifications {
 
-    public static Specification<Fournisseur> prixProduitBetween(Double minPrix, Double maxPrix) {
-        return (root, query, builder) -> {
-            if (minPrix == null && maxPrix == null) return null;
+	public Specification<Fournisseur> buildFilterSpec(
+		    Double minPrix, Double maxPrix,
+		    Double minNotation,
+		    String categorie, String nomProduit,
+		    String devise,
+		    Integer maxDelai) {
+		    
+		    return (root, query, builder) -> {
+		        // Make query distinct because of joins
+		        query.distinct(true);
 
-            query.distinct(true);
-            Join<?, ?> produits = root.join("produits", JoinType.LEFT);
+		        // Create joins once, reuse
+		        Join<?, ?> produits = root.join("produits", JoinType.LEFT);
+		        Join<?, ?> factures = root.join("factures", JoinType.LEFT);
 
-            if (minPrix == null) return builder.lessThanOrEqualTo(produits.get("prixUnitaire"), maxPrix);
-            if (maxPrix == null) return builder.greaterThanOrEqualTo(produits.get("prixUnitaire"), minPrix);
-            return builder.between(produits.get("prixUnitaire"), minPrix, maxPrix);
-        };
-    }
+		        List<Predicate> predicates = new ArrayList<>();
 
-    public static Specification<Fournisseur> notationMin(Double minNotation) {
-        return (root, query, builder) -> {
-            if (minNotation == null) return null;
-            return builder.greaterThanOrEqualTo(root.get("notation"), minNotation);
-        };
-    }
+		        // Prix filter on produits.prixUnitaire
+		        if (minPrix != null && maxPrix != null) {
+		            predicates.add(builder.between(produits.get("prixUnitaire"), minPrix, maxPrix));
+		        } else if (minPrix != null) {
+		            predicates.add(builder.greaterThanOrEqualTo(produits.get("prixUnitaire"), minPrix));
+		        } else if (maxPrix != null) {
+		            predicates.add(builder.lessThanOrEqualTo(produits.get("prixUnitaire"), maxPrix));
+		        }
 
-    public static Specification<Fournisseur> categorieProduitEgale(String categorie) {
-        return (root, query, builder) -> {
-            if (categorie == null || categorie.isEmpty()) return null;
+		        // Notation on root
+		        if (minNotation != null) {
+		            predicates.add(builder.greaterThanOrEqualTo(root.get("notation"), minNotation));
+		        }
 
-            query.distinct(true);
-            Join<?, ?> produits = root.join("produits", JoinType.LEFT);
-            return builder.equal(produits.get("categorie"), categorie);
-        };
-    }
+		        // Categorie filter on produits.categorie
+		        if (categorie != null && !categorie.isEmpty()) {
+		            predicates.add(builder.equal(produits.get("categorie"), categorie));
+		        }
 
-    public static Specification<Fournisseur> nomProduitContient(String motCle) {
-        return (root, query, builder) -> {
-            if (motCle == null || motCle.isEmpty()) return null;
+		        // Nom produit contains
+		        if (nomProduit != null && !nomProduit.isEmpty()) {
+		            predicates.add(builder.like(builder.lower(produits.get("nom")), "%" + nomProduit.toLowerCase() + "%"));
+		        }
 
-            query.distinct(true);
-            Join<?, ?> produits = root.join("produits", JoinType.LEFT);
-            return builder.like(builder.lower(produits.get("nom")), "%" + motCle.toLowerCase() + "%");
-        };
-    }
+		        // Delai livraison max on factures.delaiLivraison
+		        if (maxDelai != null) {
+		            predicates.add(builder.lessThanOrEqualTo(factures.get("delaiLivraison"), maxDelai));
+		        }
 
+		        // Add more predicates if devise filtering needed
 
-    public static Specification<Fournisseur> delaiLivraisonMax(Integer maxDelai) {
-        return (root, query, builder) -> {
-            if (maxDelai == null) return null;
-
-            query.distinct(true);
-            Join<?, ?> factures = root.join("factures", JoinType.LEFT);
-            return builder.lessThanOrEqualTo(factures.get("delaiLivraison"), maxDelai);
-        };
-    }
+		        return builder.and(predicates.toArray(new Predicate[0]));
+		    };
+		}
 }

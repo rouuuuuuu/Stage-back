@@ -1,5 +1,7 @@
 package com.example.StageDIP.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,14 +34,16 @@ public class Produit {
     private Double prixUnitaire;
 
     // Many products can belong to one supplier
+
     @ManyToOne
-    @JoinColumn(name = "fournisseur_id") 
+    @JoinColumn(name = "fournisseur_id")
+    @JsonIgnoreProperties({"produits", "factures", "hibernateLazyInitializer", "handler"})
     private Fournisseur fournisseur;
 
     @ManyToOne
     @JoinColumn(name = "facture_id")
+    @JsonIgnoreProperties({"produits", "factures", "hibernateLazyInitializer", "handler"})
     private Facture facture;
-
 
     public Produit() {}
 

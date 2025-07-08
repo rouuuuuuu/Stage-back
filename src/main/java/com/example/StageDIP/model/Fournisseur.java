@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Table(name = "fournisseur",
 indexes = {
@@ -34,11 +35,15 @@ public class Fournisseur {
     private Double num;
     private Double fax;
 
+
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"fournisseur", "facture", "hibernateLazyInitializer", "handler"})
     private Set<Produit> produits;
 
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"fournisseur", "produits", "hibernateLazyInitializer", "handler"})
     private Set<Facture> factures;
+
 
     // Default constructor for JPA
     public Fournisseur() {}
@@ -80,10 +85,15 @@ public class Fournisseur {
     public void setFactures(Set<Facture> factures) {
         this.factures = factures;
     }
+   
+
+    public Set<Produit> getProduits() {
+        return produits;
+    }
+
     public void setProduits(Set<Produit> produits) {
         this.produits = produits;
     }
-    
     
 
 }

@@ -1,36 +1,36 @@
 package com.example.StageDIP.service;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import com.example.StageDIP.model.Fournisseur;
-
-import com.example.StageDIP.repository.FournisseurRepository;
-import com.example.StageDIP.repository.FournisseurSpecifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
+import com.example.StageDIP.model.Fournisseur;
+import com.example.StageDIP.repository.FournisseurRepository;
+
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class FournisseurService {
 
     private final FournisseurRepository repo;
+    private final CurrencyConversionService currencyConversionService;
 
-    public FournisseurService(FournisseurRepository repo) {
+    public FournisseurService(FournisseurRepository repo, CurrencyConversionService currencyConversionService) {
         this.repo = repo;
+        this.currencyConversionService = currencyConversionService;
     }
 
     public Page<Fournisseur> getAll(Pageable pageable) {
         return repo.findAll(pageable);
     }
+
     public Fournisseur save(Fournisseur f) {
         return repo.save(f);
     }
@@ -38,57 +38,81 @@ public class FournisseurService {
     public void delete(Long id) {
         repo.deleteById(id);
     }
-    @Service
-    public class CurrencyConversionService {
 
-        private final RestTemplate restTemplate = new RestTemplate();
-        private final String apiKey = "d8bb6cc33d-50ac6db32e-syn6m0";
-        private final String baseUrl = "https://openexchangerates.org/api/latest.json?app_id=";
+    // The all-in-one specification builder for your filters
+    private Specification<Fournisseur> buildFilterSpec(
+    	    Double minPrix, Double maxPrix,
+    	    Double minNotation,
+    	    String categorie, String nomProduit,
+    	    String devise,
+    	    Integer maxDelai) {
 
-        private Map<String, Double> ratesCache = new HashMap<>();
-        private Instant lastFetch = Instant.MIN;
+    	    return (root, query, builder) -> {
+    	        query.distinct(true);
 
-        public double convert(double amount, String fromCurrency, String toCurrency) {
-            if (ratesCache.isEmpty() || Duration.between(lastFetch, Instant.now()).toHours() > 1) {
-                fetchRates();
-            }
-            double fromRate = ratesCache.getOrDefault(fromCurrency.toUpperCase(), 1.0);
-            double toRate = ratesCache.getOrDefault(toCurrency.toUpperCase(), 1.0);
-            return amount / fromRate * toRate;
-        }
-       
+    	        List<Predicate> predicates = new ArrayList<>();
 
+    	        // Notation filter on fournisseur (root)
+    	        if (minNotation != null) {
+    	            predicates.add(builder.greaterThanOrEqualTo(root.get("notation"), minNotation));
+    	        }
 
-        private void fetchRates() {
-            String url = baseUrl + apiKey;
-            Map response = restTemplate.getForObject(url, Map.class);
-            ratesCache = (Map<String, Double>) response.get("rates");
-            lastFetch = Instant.now();
-        }
+    	        // Filter on produits (price, category, name)
+    	        if (minPrix != null || maxPrix != null || (categorie != null && !categorie.isEmpty()) || (nomProduit != null && !nomProduit.isEmpty())) {
+    	            Join<?, ?> produits = root.join("produits", JoinType.LEFT);
+
+    	            if (minPrix != null && maxPrix != null) {
+    	                predicates.add(builder.between(produits.get("prixUnitaire"), minPrix, maxPrix));
+    	            } else if (minPrix != null) {
+    	                predicates.add(builder.greaterThanOrEqualTo(produits.get("prixUnitaire"), minPrix));
+    	            } else if (maxPrix != null) {
+    	                predicates.add(builder.lessThanOrEqualTo(produits.get("prixUnitaire"), maxPrix));
+    	            }
+
+    	            if (categorie != null && !categorie.isEmpty()) {
+    	                predicates.add(builder.equal(produits.get("categorie"), categorie));
+    	            }
+
+    	            if (nomProduit != null && !nomProduit.isEmpty()) {
+    	                predicates.add(builder.like(builder.lower(produits.get("nom")), "%" + nomProduit.toLowerCase() + "%"));
+    	            }
+    	        }
+
+    	        // Filter on factures (delivery delay, devise)
+    	        if (maxDelai != null || (devise != null && !devise.isEmpty())) {
+    	            Join<?, ?> factures = root.join("factures", JoinType.LEFT);
+
+    	            if (maxDelai != null) {
+    	                predicates.add(builder.lessThanOrEqualTo(factures.get("delaiLivraison"), maxDelai));
+    	            }
+
+    	            if (devise != null && !devise.isEmpty()) {
+    	                predicates.add(builder.equal(factures.get("devise"), devise));
+    	            }
+    	        }
+
+    	        return builder.and(predicates.toArray(new Predicate[0]));
+    	    };
+    	}
+
+    // Your public filter method to call from controller/service layer
+    public Page<Fournisseur> filterFournisseurs(
+        Double minPrix, Double maxPrix,
+        Double minNotation,
+        String categorie, String nomProduit,
+        String devise,
+        Integer maxDelai,
+        Pageable pageable) {
+
+        Specification<Fournisseur> spec = buildFilterSpec(minPrix, maxPrix, minNotation, categorie, nomProduit, devise, maxDelai);
+        return repo.findAll(spec, pageable);
     }
 
-
-    public Page<Fournisseur> filterFournisseurs(
-    	    Double minPrix, Double maxPrix, Double minNotation,
-    	    String categorie, String nomProduit, String devise,
-    	    Integer maxDelai, Pageable pageable) {
-
-    	    Specification<Fournisseur> spec = Specification.where(null);
-
-    	    spec = spec.and(FournisseurSpecifications.prixProduitBetween(minPrix, maxPrix));
-    	    spec = spec.and(FournisseurSpecifications.notationMin(minNotation));
-    	    spec = spec.and(FournisseurSpecifications.categorieProduitEgale(categorie));
-    	    spec = spec.and(FournisseurSpecifications.nomProduitContient(nomProduit));
-    	    spec = spec.and(FournisseurSpecifications.delaiLivraisonMax(maxDelai));
-
-    	    return repo.findAll(spec, pageable);
-    	}
     public Fournisseur update(Long id, Fournisseur fournisseurData) {
         Optional<Fournisseur> optional = repo.findById(id);
         if (optional.isEmpty()) return null;
 
         Fournisseur existing = optional.get();
-        // Update fields explicitly, no blind save:
         existing.setNom(fournisseurData.getNom());
         existing.setAdresse(fournisseurData.getAdresse());
         existing.setEmail(fournisseurData.getEmail());
@@ -97,4 +121,7 @@ public class FournisseurService {
         return repo.save(existing);
     }
 
+    public List<Fournisseur> getAllFlat() {
+        return repo.findAll(); // assuming eager fetch or @EntityGraph on repo
+    }
 }

@@ -7,14 +7,35 @@ public class FournisseurMatchDTO {
 
     @JsonIgnoreProperties({"produits", "factures", "hibernateLazyInitializer", "handler"})
     private Fournisseur fournisseur;
+    
+    private Long id;
+    private String nom;
+    private String adresse;
+    private String email;
 
     private double prixTotal;
     private double couverture;
     private double score;
-
-    // New additions:
     private int minDelai;
     private double notation;
+
+    // Constructor - fill everything explicitly
+    public FournisseurMatchDTO(Long id, String nom, String adresse, String email,
+                              double prixTotal, double couverture, double score,
+                              int minDelai, double notation) {
+        this.id = id;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.email = email;
+        this.prixTotal = prixTotal;
+        this.couverture = couverture;
+        this.score = score;
+        this.minDelai = minDelai;
+        this.notation = notation;
+    }
+
+
+    
 
     public FournisseurMatchDTO(Fournisseur fournisseur, double prixTotal, double couverture) {
         this.fournisseur = fournisseur;
