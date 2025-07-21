@@ -1,66 +1,70 @@
 package com.example.StageDIP.repository;
 
-import com.example.StageDIP.model.Fournisseur;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Predicate;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.example.StageDIP.model.Facture;
+import com.example.StageDIP.model.Fournisseur;
+import com.example.StageDIP.model.Produit;
+
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+
 public class FournisseurSpecifications {
 
-	public Specification<Fournisseur> buildFilterSpec(
-		    Double minPrix, Double maxPrix,
-		    Double minNotation,
-		    String categorie, String nomProduit,
-		    String devise,
-		    Integer maxDelai) {
-		    
-		    return (root, query, builder) -> {
-		        // Make query distinct because of joins
-		        query.distinct(true);
+    public static Specification<Fournisseur> filter(
+            Double minMontantTotalDernier,
+            Double maxMontantTotalDernier,
+            Double minNotation,
+            String categorie,
+            String nomProduit,
+            String devise,
+            Integer maxDelai
+    ) {
+        return (root, query, cb) -> {
+            // To avoid duplicates because of joins
+            query.distinct(true);
 
-		        // Create joins once, reuse
-		        Join<?, ?> produits = root.join("produits", JoinType.LEFT);
-		        Join<?, ?> factures = root.join("factures", JoinType.LEFT);
+            List<Predicate> predicates = new ArrayList<>();
 
-		        List<Predicate> predicates = new ArrayList<>();
+            if (minNotation != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("notation"), minNotation));
+            }
 
-		        // Prix filter on produits.prixUnitaire
-		        if (minPrix != null && maxPrix != null) {
-		            predicates.add(builder.between(produits.get("prixUnitaire"), minPrix, maxPrix));
-		        } else if (minPrix != null) {
-		            predicates.add(builder.greaterThanOrEqualTo(produits.get("prixUnitaire"), minPrix));
-		        } else if (maxPrix != null) {
-		            predicates.add(builder.lessThanOrEqualTo(produits.get("prixUnitaire"), maxPrix));
-		        }
+            if (categorie != null) {
+                Join<Fournisseur, Produit> produitJoin = root.join("produits", JoinType.LEFT);
+                predicates.add(cb.equal(produitJoin.get("categorie"), categorie));
+            }
 
-		        // Notation on root
-		        if (minNotation != null) {
-		            predicates.add(builder.greaterThanOrEqualTo(root.get("notation"), minNotation));
-		        }
+            if (nomProduit != null) {
+                Join<Fournisseur, Produit> produitJoin = root.join("produits", JoinType.LEFT);
+                predicates.add(cb.like(cb.lower(produitJoin.get("nom")), "%" + nomProduit.toLowerCase() + "%"));
+            }
 
-		        // Categorie filter on produits.categorie
-		        if (categorie != null && !categorie.isEmpty()) {
-		            predicates.add(builder.equal(produits.get("categorie"), categorie));
-		        }
+            if (devise != null) {
+                Join<Fournisseur, Facture> factureJoin = root.join("factures", JoinType.LEFT);
+                predicates.add(cb.equal(factureJoin.get("devise"), devise));
+            }
 
-		        // Nom produit contains
-		        if (nomProduit != null && !nomProduit.isEmpty()) {
-		            predicates.add(builder.like(builder.lower(produits.get("nom")), "%" + nomProduit.toLowerCase() + "%"));
-		        }
+            if (maxDelai != null) {
+                Join<Fournisseur, Facture> factureJoin = root.join("factures", JoinType.LEFT);
+                predicates.add(cb.lessThanOrEqualTo(factureJoin.get("delaiLivraison"), maxDelai));
+            }
 
-		        // Delai livraison max on factures.delaiLivraison
-		        if (maxDelai != null) {
-		            predicates.add(builder.lessThanOrEqualTo(factures.get("delaiLivraison"), maxDelai));
-		        }
+            if (minMontantTotalDernier != null) {
+                Join<Fournisseur, Facture> factureJoin = root.join("factures", JoinType.LEFT);
+                predicates.add(cb.greaterThanOrEqualTo(factureJoin.get("montantTotal"), minMontantTotalDernier));
+            }
 
-		        // Add more predicates if devise filtering needed
+            if (maxMontantTotalDernier != null) {
+                Join<Fournisseur, Facture> factureJoin = root.join("factures", JoinType.LEFT);
+                predicates.add(cb.lessThanOrEqualTo(factureJoin.get("montantTotal"), maxMontantTotalDernier));
+            }
 
-		        return builder.and(predicates.toArray(new Predicate[0]));
-		    };
-		}
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
 }

@@ -3,6 +3,8 @@ package com.example.StageDIP.controller;
 import com.example.StageDIP.model.Client;
 import com.example.StageDIP.service.ClientService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ public class ClientController {
 
     // Register new client
     @PostMapping("/register")
-    public ResponseEntity<?> registerClient(@RequestBody Client client) {
+    public ResponseEntity<?> registerClient(@Valid @RequestBody Client client) {
         try {
             Client savedClient = clientService.registerClient(client);
             return ResponseEntity.status(201).body(savedClient);

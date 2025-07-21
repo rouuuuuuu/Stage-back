@@ -1,7 +1,7 @@
 package com.example.StageDIP.dto;
 
-import com.example.StageDIP.model.Fournisseur;
 import com.example.StageDIP.model.Facture;
+import com.example.StageDIP.model.Fournisseur;
 
 public class FournisseurTableDTO {
 
@@ -11,8 +11,8 @@ public class FournisseurTableDTO {
     private String email;
     private Double notation;
 
-    private Double prix;
-    private Integer delai;
+    private Double montantTotalDernier;
+    private Integer delaiLivraisonDernier;
     private String devise;
 
     public FournisseurTableDTO(Fournisseur fournisseur) {
@@ -22,7 +22,6 @@ public class FournisseurTableDTO {
         this.email = fournisseur.getEmail();
         this.notation = fournisseur.getNotation();
 
-        // Use latest facture if it exists
         if (fournisseur.getFactures() != null && !fournisseur.getFactures().isEmpty()) {
             Facture latest = fournisseur.getFactures().stream()
                 .sorted((a, b) -> b.getDate().compareTo(a.getDate()))
@@ -30,15 +29,14 @@ public class FournisseurTableDTO {
                 .orElse(null);
 
             if (latest != null) {
-                this.prix = latest.getPrixproduit();
-                this.delai = latest.getDelaiLivraison();
-                this.devise = "TND"; // 👈 update this if 'devise' is added in Facture class
+                this.montantTotalDernier = latest.getMontantTotal();
+                this.delaiLivraisonDernier = latest.getDelaiLivraison();
+                this.devise = "TND"; // or latest.getDevise() if available
             }
         }
     }
 
-    // === Getters & Setters ===
-
+    // Getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -54,11 +52,11 @@ public class FournisseurTableDTO {
     public Double getNotation() { return notation; }
     public void setNotation(Double notation) { this.notation = notation; }
 
-    public Double getPrix() { return prix; }
-    public void setPrix(Double prix) { this.prix = prix; }
+    public Double getMontantTotalDernier() { return montantTotalDernier; }
+    public void setMontantTotalDernier(Double montantTotalDernier) { this.montantTotalDernier = montantTotalDernier; }
 
-    public Integer getDelai() { return delai; }
-    public void setDelai(Integer delai) { this.delai = delai; }
+    public Integer getDelaiLivraisonDernier() { return delaiLivraisonDernier; }
+    public void setDelaiLivraisonDernier(Integer delaiLivraisonDernier) { this.delaiLivraisonDernier = delaiLivraisonDernier; }
 
     public String getDevise() { return devise; }
     public void setDevise(String devise) { this.devise = devise; }

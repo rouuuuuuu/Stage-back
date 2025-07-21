@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.StageDIP.service.FileService;
 
+import jakarta.validation.Valid;
+
 import java.io.IOException;
 
 @RestController
@@ -28,7 +30,7 @@ public class FileUploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@Valid @RequestParam("file") MultipartFile file) {
         System.out.println("Request received: " + file.getOriginalFilename());
 
         if (file.isEmpty()) {

@@ -45,7 +45,7 @@ public class StageDipApplication {
                 f.setAdresse(faker.address().fullAddress());
                 f.setEmail(faker.internet().emailAddress());
                 f.setNotation(faker.number().randomDouble(2, 1, 5));
-                f.setNumero(faker.number().randomDouble(0, 1000000000, 9999999999L));
+                f.setNumero(faker.number().randomDouble(0, 1000000, 9999999));
                 f.setFax(faker.number().randomDouble(0, 1000000, 9999999));
                 fournisseurRepo.save(f);
 

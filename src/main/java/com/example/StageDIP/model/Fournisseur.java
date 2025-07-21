@@ -45,7 +45,6 @@ public class Fournisseur {
     private Set<Facture> factures;
 
 
-    // Default constructor for JPA
     public Fournisseur() {}
 
     public Fournisseur(String nom, String adresse, String email, Double notation,Double num,Double fax) {
@@ -57,7 +56,6 @@ public class Fournisseur {
         this.notation = notation;
     }
 
-    // Getters & Setters
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

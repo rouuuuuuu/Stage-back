@@ -4,6 +4,8 @@ import com.example.StageDIP.dto.ConsultationClientDTO;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.service.ConsultationService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class ConsultationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createConsultation(@RequestBody ConsultationClientDTO dto) {
+    public ResponseEntity<?> createConsultation(@Valid @RequestBody ConsultationClientDTO dto) {
         try {
             ConsultationClient result = consultationService.createConsultation(dto);
             return ResponseEntity.status(201).body(result);

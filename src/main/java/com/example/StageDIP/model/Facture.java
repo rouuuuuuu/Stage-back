@@ -23,12 +23,14 @@ public class Facture {
 
     private Date date;
 
-    private Double montantTotal;
 
 
     // Délai max de livraison en jours
     private Integer delaiLivraison;
     private Double  prixproduit;
+    private String devise ;
+    private Double montantTotal;
+
     // Chaque facture appartient à un seul fournisseur
     @ManyToOne
     @JoinColumn(name = "fournisseur_id", nullable = false)
@@ -71,4 +73,12 @@ public class Facture {
 
     public Set<Produit> getProduits() { return produits; }
     public void setProduits(Set<Produit> produits) { this.produits = produits; }
+
+	public String getDevise() {
+		return devise;
+	}
+
+	public void setDevise(String devise) {
+		this.devise = devise;
+	}
 }

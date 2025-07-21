@@ -3,6 +3,9 @@ package com.example.StageDIP.controller;
 import com.example.StageDIP.dto.FactureDTO;
 import com.example.StageDIP.model.Facture;
 import com.example.StageDIP.service.FactureService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +27,7 @@ public class FactureController {
     }
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody FactureDTO dto) {
+    public ResponseEntity<?> add(@Valid @RequestBody FactureDTO dto) {
         try {
             Facture saved = service.saveFromDTO(dto);
             return ResponseEntity.ok(saved);

@@ -3,6 +3,9 @@ package com.example.StageDIP.controller;
 import com.example.StageDIP.dto.ProduitDTO;
 import com.example.StageDIP.model.Produit;
 import com.example.StageDIP.service.ProduitService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +32,7 @@ public class ProduitController {
     }
 
     @PostMapping
-    public Produit add(@RequestBody Produit produit) {
+    public Produit add(@Valid @RequestBody Produit produit) {
         return produitService.save(produit);
     }
 
@@ -44,7 +47,7 @@ public class ProduitController {
     }
 
     @PostMapping("/nouveau")
-    public ResponseEntity<Produit> addNewProduit(@RequestBody Produit produit) {
+    public ResponseEntity<Produit> addNewProduit(@Valid @RequestBody Produit produit) {
         Produit savedProduit = produitService.addNewProduct(produit);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduit);
     }

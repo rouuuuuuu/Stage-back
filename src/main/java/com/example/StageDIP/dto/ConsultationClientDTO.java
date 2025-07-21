@@ -1,32 +1,53 @@
 package com.example.StageDIP.dto;
 
+import jakarta.validation.constraints.*;
 import java.util.List;
 
-import com.example.StageDIP.model.Client;
-
 public class ConsultationClientDTO {
-	private Long clientId; 
 
-	
+    @NotNull(message = "L'ID du client est obligatoire.")
+    private Long clientId;
+
+    @NotBlank(message = "La description est obligatoire.")
+    @Size(min = 10, max = 1000, message = "La description doit contenir entre 10 et 1000 caractères.")
     private String description;
-    private List<Long> produitsIds;
 
-    public Long getClientId() { return clientId; }
-    public void setClientId(Long clientId) { this.clientId = clientId; }
+    @NotEmpty(message = "Au moins un produit doit être sélectionné.")
+    private List<@NotNull(message = "L'ID du produit ne peut pas être nul.") Long> produitsIds;
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    @NotNull(message = "L'ID du fournisseur est obligatoire.")
+    private Long fournisseurId;
 
-    public List<Long> getProduitsIds() { return produitsIds; }
-    public void setProduitsIds(List<Long> produitsIds) { this.produitsIds = produitsIds; }
+    // Getters & Setters
+    public Long getClientId() {
+        return clientId;
+    }
 
-private Long fournisseurId;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
 
-public Long getFournisseurId() {
-    return fournisseurId;
-}
+    public String getDescription() {
+        return description;
+    }
 
-public void setFournisseurId(Long fournisseurId) {
-    this.fournisseurId = fournisseurId;
-}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Long> getProduitsIds() {
+        return produitsIds;
+    }
+
+    public void setProduitsIds(List<Long> produitsIds) {
+        this.produitsIds = produitsIds;
+    }
+
+    public Long getFournisseurId() {
+        return fournisseurId;
+    }
+
+    public void setFournisseurId(Long fournisseurId) {
+        this.fournisseurId = fournisseurId;
+    }
 }

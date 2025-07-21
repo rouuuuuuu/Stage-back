@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.StageDIP.service.OCRParser;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/ocr")
 public class OCRController {
@@ -20,7 +22,7 @@ public class OCRController {
     private OCRParser ocrParser;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> handleFileUpload(@Valid @RequestParam("file") MultipartFile file) {
         try {
             File uploadDir = new File("uploads");
             if (!uploadDir.exists()) uploadDir.mkdirs();

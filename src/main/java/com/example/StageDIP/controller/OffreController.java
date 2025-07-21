@@ -3,6 +3,9 @@ package com.example.StageDIP.controller;
 import com.example.StageDIP.dto.OffreDTO;
 import com.example.StageDIP.model.Offre;
 import com.example.StageDIP.service.OffreService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +34,7 @@ public class OffreController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody OffreDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody OffreDTO dto) {
         try {
             Offre saved = service.saveFromDTO(dto);
             return ResponseEntity.status(201).body(saved);
