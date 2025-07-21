@@ -24,7 +24,7 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-    @PostMapping("/login")
+    @PostMapping({"/login", "/signin"})
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -43,7 +43,7 @@ public class AuthController {
             // Return 401 unauthorized if login fails
             return ResponseEntity.status(401).body("Invalid username or password");
         } catch (Exception ex) {
-            // General fallback
+            ex.printStackTrace();  // <--- dump that error on the console
             return ResponseEntity.status(500).body("An error occurred during authentication");
         }
     }

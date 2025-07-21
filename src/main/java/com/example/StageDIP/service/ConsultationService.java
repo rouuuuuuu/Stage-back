@@ -1,6 +1,7 @@
 package com.example.StageDIP.service;
 
 import com.example.StageDIP.dto.ConsultationClientDTO;
+import com.example.StageDIP.dto.ConsultationHistoryDTO;
 import com.example.StageDIP.model.Client;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.model.Facture;
@@ -13,15 +14,17 @@ import com.example.StageDIP.repository.ProduitRepository;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-
 public class ConsultationService {
 
     private final ConsultationClientRepository consultationRepo;
@@ -29,7 +32,6 @@ public class ConsultationService {
     private final ClientRepository clientRepo;
     private final FactureRepository factureRepo;
     private final FournisseurRepository fournisseurRepo;
-
 
     public ConsultationService(
             ConsultationClientRepository consultationRepo,
@@ -42,7 +44,7 @@ public class ConsultationService {
         this.produitRepo = produitRepo;
         this.clientRepo = clientRepo;
         this.factureRepo = factureRepo;
-        this.fournisseurRepo=fournisseurRepo;
+        this.fournisseurRepo = fournisseurRepo;
     }
 
     @Transactional
@@ -60,18 +62,13 @@ public class ConsultationService {
         List<Produit> produits = dto.getProduitsIds().stream()
                 .map(id -> produitRepo.findById(id)
                         .orElseThrow(() -> new IllegalArgumentException("Produit introuvable avec id : " + id)))
-                .toList();
+                .collect(Collectors.toList());
 
         Facture facture = new Facture();
         facture.setDate(new Date());
         facture.setMontantTotal(0.0);
         facture.setPrixproduit(0.0);
-
-        // Remove fournisseur setting completely
-        // facture.setFournisseur(...)  <-- GONE
-
         facture.setDelaiLivraison(5);
-
         facture = factureRepo.save(facture);
 
         ConsultationClient consultation = new ConsultationClient();
@@ -84,17 +81,18 @@ public class ConsultationService {
         return consultationRepo.save(consultation);
     }
 
-    // 🔹 Récupération de toutes les consultations (admin)
+    // Retrieve all consultations (admin)
     public List<ConsultationClient> getAllConsultations() {
         return consultationRepo.findAll();
     }
 
-    // 🔹 Récupération de consultations par client (employé)
-    public List<ConsultationClient> getConsultationsByClientId(Long clientId) {
-        return consultationRepo.findByClientId(clientId);
+    // Retrieve consultations by client (employee)
+    public Page<ConsultationClient> getConsultationsByClientId(Long clientId, Pageable pageable) {
+        return consultationRepo.findByClientId(clientId, pageable);
     }
 
-    // 🔥 Analyse des fournisseurs basées sur l'historique des factures
+
+    // Analyze suppliers based on invoices history
     public List<Map<String, Object>> analyserFournisseursParProduits(List<Long> produitIds) {
         List<Facture> factures = factureRepo.findByProduitsIdIn(produitIds);
 
@@ -126,5 +124,45 @@ public class ConsultationService {
         }
 
         return stats;
+    }
+
+    // ==== Paginated consultation history with optional client filter ====
+ // Paginated retrieval of all consultations (admin)
+    public Page<ConsultationClient> getAllConsultations(Pageable pageable) {
+        return consultationRepo.findAll(pageable);
+    }
+
+    public Page<ConsultationHistoryDTO> getConsultationHistory(Long clientId, Pageable pageable) {
+        Page<ConsultationClient> page;
+        if (clientId != null) {
+            page = consultationRepo.findByClientId(clientId, pageable);
+        } else {
+            page = consultationRepo.findAll(pageable);
+        }
+
+        return page.map(c -> {
+            LocalDateTime factureDate = null;
+            Double factureMontant = null;
+            String factureDevise = null;
+
+            if (c.getFacture() != null) {
+                factureDate = c.getFacture().getDate() != null
+                        ? LocalDateTime.ofInstant(c.getFacture().getDate().toInstant(), ZoneId.systemDefault())
+                        : null;
+                factureMontant = c.getFacture().getMontantTotal();
+                factureDevise = c.getFacture().getDevise();
+            }
+
+            return new ConsultationHistoryDTO(
+                    c.getId(),
+                    c.getClient().getNom(),
+                    c.getDescription(),
+                    c.getProduitsDemandes().stream().map(Produit::getNom).collect(Collectors.toList()),
+                    c.getDateCreation(),
+                    factureDate,
+                    factureMontant,
+                    factureDevise
+            );
+        });
     }
 }

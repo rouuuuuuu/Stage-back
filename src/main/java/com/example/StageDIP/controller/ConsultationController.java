@@ -1,15 +1,19 @@
 package com.example.StageDIP.controller;
 
 import com.example.StageDIP.dto.ConsultationClientDTO;
+import com.example.StageDIP.dto.ConsultationHistoryDTO;
 import com.example.StageDIP.model.ConsultationClient;
 import com.example.StageDIP.service.ConsultationService;
 
 import jakarta.validation.Valid;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/consultations")
@@ -30,17 +34,36 @@ public class ConsultationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    
+    @GetMapping("/history")
+    public ResponseEntity<?> getConsultationHistory(
+            @RequestParam(required = false) Long clientId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<ConsultationHistoryDTO> historyPage = consultationService.getConsultationHistory(clientId, pageable);
+            return ResponseEntity.ok(historyPage);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur serveur : impossible de récupérer l'historique");
+        }
+    }
 
     @GetMapping
-    public ResponseEntity<?> getConsultations(@RequestParam(required = false) Long clientId) {
+    public ResponseEntity<?> getConsultations(
+            @RequestParam(required = false) Long clientId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         try {
-            List<ConsultationClient> consultations;
+            Pageable pageable = PageRequest.of(page, size);
+
             if (clientId != null) {
-                consultations = consultationService.getConsultationsByClientId(clientId);
+                Page<ConsultationClient> consultationsPage = consultationService.getConsultationsByClientId(clientId, pageable);
+                return ResponseEntity.ok(consultationsPage);
             } else {
-                consultations = consultationService.getAllConsultations();
+                Page<ConsultationClient> consultationsPage = consultationService.getAllConsultations(pageable);
+                return ResponseEntity.ok(consultationsPage);
             }
-            return ResponseEntity.ok(consultations);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erreur serveur : impossible de récupérer les consultations");
         }

@@ -60,6 +60,9 @@ public class SecurityConfig {
     	  .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     	  .authorizeHttpRequests(auth -> auth
     	      .requestMatchers("/api/auth/**").permitAll()
+    	      .requestMatchers("/api/consultations/**").hasAnyRole("ADMIN", "USER") // ← 👈 ADD THIS LINE
+    	      .requestMatchers("/api/files/upload").hasAnyRole("ADMIN", "USER") // Add this
+
     	      .anyRequest().authenticated()
     	  )
     	  .authenticationProvider(authenticationProvider())
