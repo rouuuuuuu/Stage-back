@@ -61,7 +61,7 @@ public class SecurityConfig {
     	  .authorizeHttpRequests(auth -> auth
     	      .requestMatchers("/api/auth/**").permitAll()
     	      .requestMatchers("/api/consultations/**").hasAnyRole("ADMIN", "USER") // ← 👈 ADD THIS LINE
-    	      .requestMatchers("/api/files/upload").hasAnyRole("ADMIN", "USER") // Add this
+    	      .requestMatchers("/api/files/upload").hasAnyRole("USER", "ADMIN")
 
     	      .anyRequest().authenticated()
     	  )

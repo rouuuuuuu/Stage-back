@@ -25,11 +25,15 @@ public class JwtUtils {
     public String generateJwtToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .claim("roles", userDetails.getAuthorities().stream()
+                        .map(auth -> auth.getAuthority()) // like "ROLE_USER", "ROLE_ADMIN"
+                        .toList())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public String getUsernameFromJwtToken(String token) {
         return Jwts.parserBuilder()

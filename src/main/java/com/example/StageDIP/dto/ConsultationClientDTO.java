@@ -15,8 +15,6 @@ public class ConsultationClientDTO {
     @NotEmpty(message = "Au moins un produit doit être sélectionné.")
     private List<@NotNull(message = "L'ID du produit ne peut pas être nul.") Long> produitsIds;
 
-    @NotNull(message = "L'ID du fournisseur est obligatoire.")
-    private Long fournisseurId;
 
     // Getters & Setters
     public Long getClientId() {
@@ -43,11 +41,7 @@ public class ConsultationClientDTO {
         this.produitsIds = produitsIds;
     }
 
-    public Long getFournisseurId() {
-        return fournisseurId;
-    }
+  
 
-    public void setFournisseurId(Long fournisseurId) {
-        this.fournisseurId = fournisseurId;
-    }
+   
 }
