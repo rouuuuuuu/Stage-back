@@ -9,6 +9,5 @@ public interface ConsultationClientRepository extends JpaRepository<Consultation
 
     Page<ConsultationClient> findAll(Pageable pageable);
 
-    // Fix: Add Pageable as second param for pagination
     Page<ConsultationClient> findByClientId(Long clientId, Pageable pageable);
 }

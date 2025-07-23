@@ -15,7 +15,7 @@ public class ConsultationClient {
 
     @ManyToOne(fetch = FetchType.EAGER) // EAGER to auto-fetch client details
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client;  //badalhaa employee
+    private Client client;  
    
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "facture_id")
