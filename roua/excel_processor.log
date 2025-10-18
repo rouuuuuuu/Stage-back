@@ -1,0 +1,91 @@
+2025-09-20 09:09:50,216 - INFO - Début du traitement pour le fichier pdf_numeric: facture.pdf
+2025-09-20 10:06:14,618 - INFO - Début du traitement pour le fichier pdf_numeric: facture.pdf
+2025-09-20 10:18:36,768 - INFO - Début du traitement pour le fichier pdf_numeric: facture.pdf
+2025-09-20 10:43:08,682 - INFO - Début du traitement pour le fichier pdf_numeric: facture.pdf
+2025-09-20 10:54:04,704 - INFO - Début du traitement pour le fichier pdf_scanned: facture3.pdf
+2025-09-20 10:54:04,705 - INFO - Traitement du fichier PDF numérisé: facture3.pdf
+2025-09-20 10:54:04,741 - INFO - Traitement de la page 1
+2025-09-20 10:54:05,603 - INFO - Image temporaire générée: temp_page_1.png
+2025-09-20 10:54:05,825 - INFO - PDF temporaire généré: temp_page_1.pdf
+2025-09-20 10:54:10,516 - INFO - Texte extrait de la page 1: 1705 caractères
+2025-09-20 10:54:10,676 - INFO - Fichier temporaire supprimé: temp_page_1.png
+2025-09-20 10:54:10,681 - INFO - Fichier temporaire supprimé: temp_page_1.pdf
+2025-09-20 10:54:10,681 - INFO - Traitement de la page 2
+2025-09-20 10:54:11,398 - INFO - Image temporaire générée: temp_page_2.png
+2025-09-20 10:54:11,558 - INFO - PDF temporaire généré: temp_page_2.pdf
+2025-09-20 10:54:15,338 - INFO - Texte extrait de la page 2: 1084 caractères
+2025-09-20 10:54:15,505 - INFO - Fichier temporaire supprimé: temp_page_2.png
+2025-09-20 10:54:15,510 - INFO - Fichier temporaire supprimé: temp_page_2.pdf
+2025-09-20 10:54:15,510 - INFO - Traitement de la page 3
+2025-09-20 10:54:16,139 - INFO - Image temporaire générée: temp_page_3.png
+2025-09-20 10:54:16,299 - INFO - PDF temporaire généré: temp_page_3.pdf
+2025-09-20 10:54:20,663 - INFO - Texte extrait de la page 3: 713 caractères
+2025-09-20 10:54:20,991 - INFO - Fichier temporaire supprimé: temp_page_3.png
+2025-09-20 10:54:20,995 - INFO - Fichier temporaire supprimé: temp_page_3.pdf
+2025-09-20 10:54:21,002 - INFO - Traitement terminé pour facture3.pdf: 0 tableaux extraits, 3115 caractères
+2025-09-20 11:09:29,375 - INFO - Début du traitement pour le fichier pdf_scanned: facture3.pdf
+2025-09-20 11:09:29,377 - INFO - Traitement du fichier PDF numérisé: facture3.pdf
+2025-09-20 11:09:29,380 - INFO - Traitement de la page 1
+2025-09-20 11:09:30,160 - INFO - Image temporaire générée: temp_page_1.png
+2025-09-20 11:09:30,338 - INFO - PDF temporaire généré: temp_page_1.pdf
+2025-09-20 11:09:34,953 - INFO - Texte extrait de la page 1: 1705 caractères
+2025-09-20 11:09:35,102 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 11:09:35,103 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 11:09:35,306 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 11:09:35,308 - INFO - Tableau heuristique détecté: 6 lignes de produits
+2025-09-20 11:09:35,310 - INFO - Tableau heuristique créé: 4 lignes, 6 colonnes
+2025-09-20 11:09:35,372 - INFO - Tableau heuristique 1 extrait de la page 1: 4 lignes, 6 colonnes
+2025-09-20 11:09:35,373 - INFO - Fichier temporaire supprimé: temp_page_1.png
+2025-09-20 11:09:35,378 - INFO - Fichier temporaire supprimé: temp_page_1.pdf
+2025-09-20 11:09:35,379 - INFO - Traitement de la page 2
+2025-09-20 11:09:36,065 - INFO - Image temporaire générée: temp_page_2.png
+2025-09-20 11:09:36,239 - INFO - PDF temporaire généré: temp_page_2.pdf
+2025-09-20 11:09:39,728 - INFO - Texte extrait de la page 2: 1084 caractères
+2025-09-20 11:09:39,907 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 11:09:39,907 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 11:09:40,051 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 11:09:40,052 - INFO - Fichier temporaire supprimé: temp_page_2.png
+2025-09-20 11:09:40,056 - INFO - Fichier temporaire supprimé: temp_page_2.pdf
+2025-09-20 11:09:40,057 - INFO - Traitement de la page 3
+2025-09-20 11:09:40,684 - INFO - Image temporaire générée: temp_page_3.png
+2025-09-20 11:09:40,873 - INFO - PDF temporaire généré: temp_page_3.pdf
+2025-09-20 11:09:45,113 - INFO - Texte extrait de la page 3: 713 caractères
+2025-09-20 11:09:45,295 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 11:09:45,295 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 11:09:45,450 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 11:09:45,451 - INFO - Fichier temporaire supprimé: temp_page_3.png
+2025-09-20 11:09:45,455 - INFO - Fichier temporaire supprimé: temp_page_3.pdf
+2025-09-20 11:09:45,460 - INFO - Traitement terminé pour facture3.pdf: 1 tableaux extraits, 3115 caractères
+2025-09-20 12:03:31,354 - INFO - Début du traitement pour le fichier pdf_scanned: facture3.pdf
+2025-09-20 12:03:31,355 - INFO - Traitement du fichier PDF numérisé: facture3.pdf
+2025-09-20 12:03:31,358 - INFO - Traitement de la page 1
+2025-09-20 12:03:32,173 - INFO - Image temporaire générée: temp_page_1.png
+2025-09-20 12:03:32,373 - INFO - PDF temporaire généré: temp_page_1.pdf
+2025-09-20 12:03:38,367 - INFO - Texte extrait de la page 1: 1705 caractères
+2025-09-20 12:03:38,588 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 12:03:38,589 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 12:03:38,766 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 12:03:38,768 - INFO - Tableau heuristique détecté: 7 lignes de produits
+2025-09-20 12:03:38,788 - INFO - Tableau heuristique créé: 4 lignes, 6 colonnes
+2025-09-20 12:03:38,796 - INFO - Tableau heuristique 1 extrait de la page 1: 4 lignes, 6 colonnes
+2025-09-20 12:03:38,797 - INFO - Fichier temporaire supprimé: temp_page_1.png
+2025-09-20 12:03:38,801 - INFO - Fichier temporaire supprimé: temp_page_1.pdf
+2025-09-20 12:03:38,802 - INFO - Traitement de la page 2
+2025-09-20 12:03:39,502 - INFO - Image temporaire générée: temp_page_2.png
+2025-09-20 12:03:39,648 - INFO - PDF temporaire généré: temp_page_2.pdf
+2025-09-20 12:03:43,053 - INFO - Texte extrait de la page 2: 1084 caractères
+2025-09-20 12:03:43,292 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 12:03:43,292 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 12:03:43,495 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 12:03:43,496 - INFO - Fichier temporaire supprimé: temp_page_2.png
+2025-09-20 12:03:43,500 - INFO - Fichier temporaire supprimé: temp_page_2.pdf
+2025-09-20 12:03:43,501 - INFO - Traitement de la page 3
+2025-09-20 12:03:44,116 - INFO - Image temporaire générée: temp_page_3.png
+2025-09-20 12:03:44,317 - INFO - PDF temporaire généré: temp_page_3.pdf
+2025-09-20 12:03:48,525 - INFO - Texte extrait de la page 3: 713 caractères
+2025-09-20 12:03:48,748 - INFO - Camelot (lattice) a trouvé 0 tableaux
+2025-09-20 12:03:48,749 - INFO - Aucun tableau valide avec lattice, tentative avec stream...
+2025-09-20 12:03:48,923 - INFO - Camelot (stream) a trouvé 0 tableaux
+2025-09-20 12:03:48,924 - INFO - Fichier temporaire supprimé: temp_page_3.png
+2025-09-20 12:03:48,928 - INFO - Fichier temporaire supprimé: temp_page_3.pdf
+2025-09-20 12:03:48,933 - INFO - Traitement terminé pour facture3.pdf: 1 tableaux extraits, 3115 caractères

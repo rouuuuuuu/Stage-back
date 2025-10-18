@@ -1,0 +1,54 @@
+N° de facture
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------
+ﺓﺭﻮﺗﺎﻓ
+FACTURE
+DUPLICATA
+M.STE MARKETING TALENT SERVICES INTER
+2025070005551775 ﺓﺭﻮﺗﺎﻔﻟﺍ ﻢﻗﺭ
+REBII AHMED REBII AHMED
+Date de Facturation 01/07/2025 ﺓﺮﺗﻮﻔﻟﺍ ﺦﻳﺭﺎﺗ
+8 R IBRAHIM JAFFEL
+MENZAH 4
+Code client 1.1124368146 ﻒﻳﺮﺤﻟﺍ ﺰﻣﺭ
+Numéro Téléphonique 71751285 ﻒﺗﺎﻬﻟﺍ ﻢﻗﺭ
+1004 EL MENZAH
+Offre Fixe postpaye pro ﺽﺮﻌﻟﺍ
+2025070005551775
+Description Montant (DT) ﺭﺎﻨﻳﺪﻟﺎﺑ ﻎﻠﺒﻤﻟﺍ ﻞﻴﺻﺎﻔﺘﻟﺍ
+Souche du Bulletin de Versement - ﻞﻳﺰﻨﺗ ﺔﻗﺎﻄﺑ ﺭﺬﺟ Bulletin de Versement - ﻞﻳﺰﻨﺗ ﺔﻗﺎﻄﺑ
+Code Client : 1.1124368146 :ﻒﻳﺮﺤﻟﺍ ﺰﻣﺭ Code Client : 1.1124368146 :ﻒﻳﺮﺤﻟﺍ ﺰﻣﺭ
+Montant à payer : 299,180 :ﻲﻠﻤﺠﻟﺍ ﻎﻠﺒﻤﻟﺍ Montant à payer : 299,180 :ﻲﻠﻤﺠﻟﺍ ﻎﻠﺒﻤﻟﺍ
+Date de Facturation : 01/07/2025 :ﺓﺮﺗﻮﻔﻟﺍ ﺦﻳﺭﺎﺗ Date de Facturation : 01/07/2025 :ﺓﺮﺗﻮﻔﻟﺍ ﺦﻳﺭﺎﺗ
+N° d'émission Date d'émission N° d'émission Date d'émission
+ﺭﺍﺪﺻﻻﺍ ﻢﻗﺭ ﺭﺍﺪﺻﻻﺍ ﺦﻳﺭﺎﺗ ﺭﺍﺪﺻﻻﺍ ﻢﻗﺭ ﺭﺍﺪﺻﻻﺍ ﺦﻳﺭﺎﺗ
+ﺔﺴﺳﺆﻤﻟﺍ ﺰﻣﺭ ﻎﻠﺒﻤﻟﺍ ﻊﺟﺮﻤﻟﺍ ﺡﺎﺘﻔﻤﻟﺍ ﺔﺴﺳﺆﻤﻟﺍ ﺰﻣﺭ ﻎﻠﺒﻤﻟﺍ ﻊﺟﺮﻤﻟﺍ ﺡﺎﺘﻔﻤﻟﺍ
+0385 00299180 2025070005551775 4D 0385 00299180 2025070005551775 4D
+C.Org Montant Référence Clé C.Org Montant Référence Clé
+2025070005551775
+Abonnements et Services 30,252 ﺕﺍﺭﺎﻴﺨﻟﺍ ﻭ ﺔﻴﻓﺍﺰﺠﻟﺍ ﺽﻭﺮﻌﻟﺍ
+Forfaits et Redevances 30,252 ﻡﻮﺳﺮﻟﺍ ﻭ ﺔﻴﻓﺍﺰﺠﻟﺍ ﺽﻭﺮﻌﻟﺍ
+Communications vers FIXE 10,454 ﺭﺎﻘﻟﺍ ﻒﺗﺎﻬﻟﺍ ﻩﺎﺠﺗﺈﺑ ﺕﺎﻤﻟﺎﻜﻣ
+Communications vers Mobile 176,990 ﻝﺍﻮﺠﻟﺍ ﻒﺗﺎﻬﻟﺍ ﻩﺎﺠﺗﺈﺑ ﺕﺎﻤﻟﺎﻜﻣ
+Communications Internationales 5,378 ﺔﻴﻟﻭﺪﻟﺍ ﺕﺎﻤﻟﺎﻜﻤﻟﺍ
+Autres Consommations 0,442 ﻯﺮﺧﺃ ﺕﺎﻛﻼﻬﺘﺳﺍ
+Total Hors Taxes 223,516 (ﺕﺍءﺍﺩﻻﺍ ﻦﻣ ﻲﻟﺎﺧ) ﻉﻮﻤﺠﻤﻟﺍ
+TVA (19%) 42,468 (%19) ﺔﻓﺎﻀﻤﻟﺍ ﺔﻤﻴﻘﻟﺍ ﻰﻠﻋ ءﺍﺩﻷﺍ
+Droit de timbre sur les services de téléphonie et internet 32,198 ﺕﺎﻧﺮﺘﻧﻷﺍﻭ ﻒﺗﺎﻬﻟﺍ ﺕﺎﻣﺪﺧ ﻰﻠﻋ ﻲﺋﺎﺒﺠﻟﺍ ﻊﺑﺎﻄﻟﺍ ﻡﻮﻠﻌﻣ
+Droit de timbre sur facture 1,000 ﺓﺭﻮﺗﺎﻔﻟﺍ ﻰﻠﻋ ﻲﺋﺎﺒﺠﻟﺍ ﻊﺑﺎﻄﻟﺍ ﻡﻮﻠﻌﻣ
+Total des charges (en DT) ﻡﻮﺳﺮﻟﺍ ﻉﻮﻤﺠﻣ
+299,180
+Montant total de la facture (en DT TTC) 299,180 ﺕﺍءﺍﺩﻵﺍ ﺏﺎﺴﺘﺣﺎﺑ ﺭﺎﻨﻳﺪﻟﺎﺑ ﻲﻠﻤﺠﻟﺍ ﻎﻠﺒﻤﻟﺍ
+Toute objection,sur les montants facturés,sera irrecevable au-delà de 6 mois de la date limite de paiement.
+Les montants unitaires sont arrondis, leur somme peut différer du montant total.
+Solde (en DT TTC) 0,000
+au 01/07/2025 2025/07/01 ﺔﻳﺎﻏ ﻰﻟﺇ ( ﺕﺍءﺍﺩﻻﺍ ﻞﻣﺎﻛ ﺭﺎﻨﻳﺪﻟﺎﺑ ) ﻲﻘﺒﺘﻤﻟﺍ ﺏﺎﺴﺤﻟﺍ
+Prière de payer avant le 18/07/2025 ﻞﺒﻗ ﻊﻓﺪﻟﺍ ءﺎﺟﺮﻟﺍ
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------
+Tout paiement de facture au-delà de 30 jours de sa date limite , sera majoré d’intérêts au taux annuel de 7% par jour de retard.
+Cher(e) client(e),
+Découvrez notre Eshop Entreprise sur https://eshop.tunisietelecom.tn/entreprise/, passez vos commandes en
+ligne en toute simplicité et profitez de la livraison gratuite à l’adresse souhaitée.
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------

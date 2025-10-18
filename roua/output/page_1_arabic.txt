@@ -1,0 +1,47 @@
+لصا
+‎Le‏
+‏فاتورة ‎FACTURE‏
+‎DUPLICATA‏
+‎RE N TER‏ سيا رقم الفاتورة ‎N° de facture a‏
+‎AHMED‏ اا
+تاريخ الفوترة 01/07/2025 ‎Date de Facturation‏
+رمز الحريف [ -- ها ‎Code client‏
+‎MENZAH‏ اه رقم الهاتف 200 ‎Numéro Téléphonique‏
+العرض ‎Offre Fixe postpaye pro‏
+2025070005551775
+التفاصيل المبلغ بالدينار ‎Description Montant (DT)‏
+العروض الجزافية و الخيارات 30,252 ‎Abonnements et Services‏
+العروض الجزافية و الرسوم 30,252 ‎Forfaits et Redevances‏
+مكالمات بإتجاه الهاتف القار 10,454 ‎Communications vers FIXE‏
+مكالمات بإتجاه الهاتف الجوال 176,990 ‎Communications vers Mobile‏
+المكالمات الدولية 5,378 ‎Communications Internationales‏
+استهلاكات أخرى 0,442 ‎Autres Consommations‏
+المجموع (خالي من الاداءات) 223,516 ‎Total Hors Taxes‏
+الأداء على القيمة المضافة )9019( 42,468 )19%( ‎TVA‏
+‏معلوم الطابع الجبائي على خدمات الهاتف والأنترنات 32,198 ‎Droit de timbre sur les services de téléphonie et internet‏
+معلوم الطابع الجبائي على الفاتورة 1,000 ‎Droit de timbre sur facture‏
+مجموع الرسوم 299,180 ‎Total des charges (en DT)‏
+المبلغ الجملي بالدينار باحتساب الآداءات 299,180 ‎Montant total de la facture (en DT TTC)‏
+‎Toute objection,sur les montants facturés, sera irrecevable au-delà de 6 mois de la date limite de paiement.‏
+‎Les montants unitaires sont arrondis, leur somme peut différer du montant total.‏
+الحساب المتبقي ( بالدينار كامل الاداءات ) إلى غاية 2025/07/01 0,000 01/07/2025 ‎Solde (en DT TTC) au‏
+الرجاء الدفع قبل 18/07/2025 ‎Prière de payer avant le‏
+‎Tout paiement de facture au-delà de 30 jours de sa date limite , sera majoré d'intérêts au taux annuel de 790 par jour de retard.‏
+رمم م م م م مه م م م ل و و ا ‎ER‏
+‏1 1
+ا ‎Cher(e) client(e),‏ 1
+‎Découvrez notre Eshop Entreprise sur https://eshop.tunisietelecom.tn/entreprise/, passez vos commandes en :‏ :
+‎ligne en toute simplicité et profitez de la livraison gratuite à l’adresse souhaitée. 5‏
+الدد ددهم مد مد دده د دده ده دده ده د دده دده مده دده ده م دده مده مه ده م ممه ممه ممه مم م مه م م مه ممه مه مه م مم م ممه م م م مه م مه م مم م مم م م م م مه ممه م مه مه م مه هه هه عع عه س سه سس ص سأ
+‎ ! Builetin de Versement-Déee 000000000000‏ جذر ‎Souche du Bulletin de Versement - SRE‏ 7 = 8
+رمز الحريف: 1.1124368146 : ‎Code Client‏ | رمز الحريف: 1.1124368146 ‎Code Client:‏ = 5
+المبلغ الجملي: 299,180 : ‎Montant à payer‏ | المبلغ الجملي: 299,180 : ‎à = Montant à payer‏
+تاريخ الفوترة: 01/07/2025 ‎Date de Facturation:‏ ! تاريخ الفوترة: 01/07/2025 : ‎S = Date de Facturation‏
+1 —
+‎g = N° d'émission Date d'émission ! N° d'émission Date d'émission‏
+تاريخ الاصدار رقم الاصدار ا تاريخ الاصدار رقم الاصدار ‎CR‏
+‏المفتا المرج المبلغ رمز المؤسسة_| _المفتا المرج المبلغ رمز المؤسسة_ 2< ‎à‏
+‎un 1‏
+2025070005551775 00299180 0385 | 2025070005551775 00299180 265 | =
+‎l‏ _
+‎C.Org Montant Référence Clé ! C.Org Montant Référence Clé‏
