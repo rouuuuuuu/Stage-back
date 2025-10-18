@@ -1,24 +1,100 @@
-MTS SORTING – Full Stack Development (Internship, DIP, June 2025)
-Project Overview
 
-MTS SORTING is a web application designed for supplier and consultation management. The application helps streamline workflows for managing supplier data, scheduling consultations, and tracking relevant activities. Developed during a 1-month internship, this project allowed hands-on experience with both frontend and backend development.
+# MTS SORTING – Full Stack Web Application
 
-Technologies used: Angular (Frontend), Spring Boot (Backend), MySQL (Database).
+## Project Overview
 
-Backend (Spring Boot)
+**MTS SORTING** is a web application designed for **supplier and consultation management**. Developed during a **1-month engineering internship at DIP (June 2025)**, it streamlines workflows for managing supplier data, scheduling consultations, and tracking activities.
 
-Responsibilities & Contributions:
+**Technologies:** Angular (Frontend), Spring Boot (Backend), MySQL (Database).
 
-API Development: Built RESTful endpoints for CRUD operations on suppliers, consultations, and related entities.
+---
 
-Database Management: Designed and optimized MySQL schemas, implemented relationships and indexing to ensure data integrity and efficient queries.
+## Features
 
-Business Logic Implementation: Encoded complex workflows for consultation scheduling, supplier tracking, and automated data validations.
+* Supplier management: add, edit, and track supplier data.
+* Consultation management: schedule, update, and monitor consultations.
+* Dynamic dashboards and interactive data tables.
+* Responsive design for seamless use on different devices.
+* Robust backend with secure RESTful APIs and MySQL database.
 
-Security & Authentication: Added basic authentication and input validation to prevent invalid or malicious data entry.
+---
 
-Error Handling & Logging: Implemented robust error handling and logging mechanisms to track backend issues and improve reliability.
+## Tech Stack
 
-Testing & Debugging: Conducted unit and integration testing to ensure API reliability and smooth frontend-backend integration.
+| Layer    | Technology                                      |
+| -------- | ----------------------------------------------- |
+| Frontend | Angular, TypeScript, HTML/CSS, Angular Material |
+| Backend  | Java, Spring Boot, RESTful APIs                 |
+| Database | MySQL                                           |
+| Tools    | Postman, VS Code/IntelliJ, Git                  |
 
-Skills Strengthened: Java, Spring Boot, MySQL, RESTful API development, backend architecture, security best practices, testing/debugging, workflow management.
+---
+
+## Frontend (Angular)
+
+**Responsibilities & Contributions:**
+
+* Designed **responsive and user-friendly interfaces** for supplier and consultation management.
+* Implemented **dynamic forms with validation** to reduce data entry errors.
+* Created **searchable, sortable, and paginated data tables** for better usability.
+* Integrated **frontend with backend RESTful APIs** for real-time data operations.
+* Managed **state and routing** for smooth navigation across components.
+* Styled the UI using **Angular Material and custom CSS** for a modern, professional look.
+
+**Skills Strengthened:** Angular, TypeScript, UX/UI design, responsive layouts, API integration, error handling.
+
+---
+
+## Backend (Spring Boot)
+
+**Responsibilities & Contributions:**
+
+* Developed **RESTful APIs** to handle CRUD operations on suppliers and consultations.
+* Designed and optimized **MySQL database schemas** for efficient data storage and retrieval.
+* Implemented **business logic and workflow management** for consultations and supplier tracking.
+* Added **basic authentication, input validation, and error handling** for secure and reliable operations.
+* Conducted **unit and integration testing** to ensure API reliability and smooth frontend-backend interaction.
+
+**Skills Strengthened:** Java, Spring Boot, MySQL, REST APIs, backend architecture, testing, security best practices.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/MTS-SORTING.git
+cd MTS-SORTING
+```
+
+2. **Backend setup**:
+
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+```
+
+* Make sure **MySQL** is installed and the database configuration is updated in `application.properties`.
+
+3. **Frontend setup**:
+
+```bash
+cd frontend
+npm install
+ng serve
+```
+
+* Open `http://localhost:4200` in your browser.
+
+---
+
+## Future Improvements
+
+* Implement **role-based authentication** for admin and user access.
+* Add **reporting and analytics dashboards** for better insights.
+* Enhance **frontend responsiveness and accessibility**.
+* Deploy as a **full cloud-hosted application**.
+
+---
